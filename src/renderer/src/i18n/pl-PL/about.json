@@ -1,0 +1,29 @@
+{
+  "title": "DeepChat",
+  "description": "DeepChat to wieloplatformowy klient AI, którego zadaniem jest udostępnianie sztucznej inteligencji większej liczbie osób.",
+  "website": "Odwiedź naszą stronę internetową",
+  "deviceInfo": {
+    "title": "Informacje o urządzeniu",
+    "platform": "Platforma",
+    "arch": "Architektura",
+    "cpuModel": "Model procesora",
+    "totalMemory": "Całkowita pamięć",
+    "osVersion": "Wersja systemu"
+  },
+  "disclaimerButton": "Zastrzeżenie",
+  "feedbackButton": "Informacje zwrotne",
+  "disclaimerTitle": "Warunki użytkowania",
+  "checkUpdateButton": "Sprawdź aktualizacje",
+  "mockUpdateButton": "Próbna pobrana aktualizacja",
+  "clearMockUpdateButton": "Wyczyść próbną aktualizację",
+  "mockOnboardingButton": "Próbny przewodnik po pierwszym uruchomieniu",
+  "mockChatButton": "Utwórz długi czat testowy",
+  "mockChatCreating": "Tworzenie...",
+  "mockChatCreated": "Czat testowy utworzony",
+  "mockChatCreatedDesc": "Utworzono \"{title}\" z {count} wiadomościami.",
+  "mockChatCreateFailed": "Nie udało się utworzyć czatu testowego.",
+  "mockChatCreateUnavailable": "Dane czatu testowego są dostępne tylko w kompilacjach deweloperskich.",
+  "updateChannel": "Aktualizuj kanał",
+  "stableChannel": "Stabilny",
+  "betaChannel": "Beta"
+}

@@ -1,0 +1,696 @@
+import { z } from 'zod'
+import { OrchestrationPolicySchema } from '../../orchestration/policy'
+import type { SearchResult } from '@shared/types/core/search'
+import type {
+  Agent,
+  AgentTransferImpact,
+  AgentTapeContextResult,
+  MessageTraceRecord,
+  PendingSessionInputRecord
+} from '@shared/types/agent-interface'
+import type { DeepChatTapeReplaySlice } from '@shared/types/tape-replay'
+import type { DeepChatTapeViewManifestRecord } from '@shared/types/tape-view-manifest'
+import {
+  AttachmentFallbackPolicySchema,
+  AttachmentPreparationSummarySchema,
+  SessionListItemSchema,
+  SessionPageCursorSchema,
+  MessagePageCursorSchema,
+  ChatMessageRecordSchema,
+  ChatMessagePageResultSchema,
+  EntityIdSchema,
+  MessageFileSchema,
+  UserMessageInlineItemSchema,
+  PermissionModeSchema,
+  SendMessageInputSchema,
+  SessionCompactionStateSchema,
+  SessionGenerationSettingsSchema,
+  SessionGenerationSettingsPatchSchema,
+  SubmissionIdSchema,
+  SessionWithStateSchema,
+  defineRouteContract
+} from '../common'
+import type { RouteContract } from '../common'
+import { AcpConfigStateSchema, UsageDashboardDataSchema } from '../domainSchemas'
+
+const PendingSessionInputRecordSchema = z.custom<PendingSessionInputRecord>()
+const MessageTraceRecordSchema = z.custom<MessageTraceRecord>()
+const AgentTapeContextResultSchema = z.custom<AgentTapeContextResult>()
+const DeepChatTapeViewManifestRecordSchema = z.custom<DeepChatTapeViewManifestRecord>()
+const DeepChatTapeReplaySliceSchema = z.custom<DeepChatTapeReplaySlice>().nullable()
+export interface HistorySearchOptions {
+  limit?: number
+}
+
+export interface HistorySearchSessionHit {
+  kind: 'session'
+  sessionId: string
+  title: string
+  projectDir: string | null
+  updatedAt: number
+}
+
+export interface HistorySearchMessageHit {
+  kind: 'message'
+  sessionId: string
+  messageId: string
+  title: string
+  role: 'user' | 'assistant'
+  snippet: string
+  updatedAt: number
+}
+
+export type HistorySearchHit = HistorySearchSessionHit | HistorySearchMessageHit
+
+const HistorySearchHitSchema = z.custom<HistorySearchHit>()
+const SearchResultSchema = z.custom<SearchResult>()
+const AgentSchema = z.custom<Agent>()
+const AgentTransferImpactSchema = z.custom<AgentTransferImpact>()
+
+const AcpSessionCommandSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  input: z
+    .object({
+      hint: z.string()
+    })
+    .nullable()
+    .optional()
+})
+
+export const SessionListFiltersSchema = z
+  .object({
+    agentId: EntityIdSchema.optional(),
+    projectDir: z.string().optional(),
+    includeSubagents: z.boolean().optional(),
+    parentSessionId: EntityIdSchema.optional()
+  })
+  .default({})
+
+export const CreateSessionInputSchema = z.object({
+  agentId: EntityIdSchema,
+  message: z.string(),
+  submissionId: SubmissionIdSchema.optional(),
+  files: z.array(MessageFileSchema).optional(),
+  search: z.boolean().optional(),
+  inlineItems: z.array(UserMessageInlineItemSchema).optional(),
+  projectDir: z.string().nullable().optional(),
+  providerId: z.string().optional(),
+  modelId: z.string().optional(),
+  permissionMode: PermissionModeSchema.optional(),
+  activeSkills: z.array(z.string()).optional(),
+  disabledAgentTools: z.array(z.string()).optional(),
+  orchestrationPolicy: OrchestrationPolicySchema.optional(),
+  generationSettings: SessionGenerationSettingsPatchSchema.optional()
+})
+
+export const sessionsCreateRoute = defineRouteContract({
+  name: 'sessions.create',
+  input: CreateSessionInputSchema,
+  output: z.object({
+    session: SessionWithStateSchema,
+    initialTurn: z
+      .object({
+        requestId: EntityIdSchema.nullable(),
+        messageId: EntityIdSchema.nullable(),
+        attachmentPreparation: AttachmentPreparationSummarySchema.optional()
+      })
+      .optional()
+  })
+})
+
+export const sessionsRestoreRoute = defineRouteContract({
+  name: 'sessions.restore',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    limit: z.number().int().positive().max(500).optional()
+  }),
+  output: z.object({
+    session: SessionWithStateSchema.nullable(),
+    messages: z.array(ChatMessageRecordSchema),
+    nextCursor: MessagePageCursorSchema.nullable(),
+    hasMore: z.boolean()
+  })
+})
+
+export const sessionsListMessagesPageRoute = defineRouteContract({
+  name: 'sessions.listMessagesPage',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    cursor: MessagePageCursorSchema.nullable().optional(),
+    limit: z.number().int().positive().max(500).optional()
+  }),
+  output: ChatMessagePageResultSchema
+})
+
+export const sessionsListRoute = defineRouteContract({
+  name: 'sessions.list',
+  input: SessionListFiltersSchema,
+  output: z.object({
+    sessions: z.array(SessionWithStateSchema)
+  })
+})
+
+export const sessionsListLightweightRoute = defineRouteContract({
+  name: 'sessions.listLightweight',
+  input: z.object({
+    limit: z.number().int().positive().max(100).optional(),
+    cursor: SessionPageCursorSchema.nullable().optional(),
+    includeSubagents: z.boolean().optional(),
+    agentId: EntityIdSchema.optional(),
+    prioritizeSessionId: EntityIdSchema.optional()
+  }),
+  output: z.object({
+    items: z.array(SessionListItemSchema),
+    nextCursor: SessionPageCursorSchema.nullable(),
+    hasMore: z.boolean()
+  })
+})
+
+export const sessionsGetLightweightByIdsRoute = defineRouteContract({
+  name: 'sessions.getLightweightByIds',
+  input: z.object({
+    sessionIds: z.array(EntityIdSchema)
+  }),
+  output: z.object({
+    items: z.array(SessionListItemSchema)
+  })
+})
+
+export const sessionsActivateRoute = defineRouteContract({
+  name: 'sessions.activate',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    activated: z.literal(true)
+  })
+})
+
+export const sessionsDeactivateRoute = defineRouteContract({
+  name: 'sessions.deactivate',
+  input: z.object({}),
+  output: z.object({
+    deactivated: z.literal(true)
+  })
+})
+
+export const sessionsGetActiveRoute = defineRouteContract({
+  name: 'sessions.getActive',
+  input: z.object({}),
+  output: z.object({
+    session: SessionWithStateSchema.nullable()
+  })
+})
+
+export const sessionsEnsureAcpDraftRoute = defineRouteContract({
+  name: 'sessions.ensureAcpDraft',
+  input: z.object({
+    agentId: EntityIdSchema,
+    projectDir: z.string().min(1),
+    permissionMode: PermissionModeSchema.optional()
+  }),
+  output: z.object({
+    session: SessionWithStateSchema
+  })
+})
+
+export const sessionsListPendingInputsRoute = defineRouteContract({
+  name: 'sessions.listPendingInputs',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    items: z.array(PendingSessionInputRecordSchema)
+  })
+})
+
+const PendingInputPayloadSchema = z.union([z.string(), SendMessageInputSchema])
+
+export const sessionsQueuePendingInputRoute = defineRouteContract({
+  name: 'sessions.queuePendingInput',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    content: PendingInputPayloadSchema
+  }),
+  output: z.object({
+    item: PendingSessionInputRecordSchema
+  })
+})
+
+export const sessionsUpdateQueuedInputRoute = defineRouteContract({
+  name: 'sessions.updateQueuedInput',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    itemId: EntityIdSchema,
+    content: PendingInputPayloadSchema
+  }),
+  output: z.object({
+    item: PendingSessionInputRecordSchema
+  })
+})
+
+export const sessionsMoveQueuedInputRoute = defineRouteContract({
+  name: 'sessions.moveQueuedInput',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    itemId: EntityIdSchema,
+    toIndex: z.number().int().nonnegative()
+  }),
+  output: z.object({
+    items: z.array(PendingSessionInputRecordSchema)
+  })
+})
+
+// Compatibility alias for queue-to-Steer promotion. It follows the same admission lifecycle as
+// sessions.steerPendingInput.
+export const sessionsConvertPendingInputToSteerRoute = defineRouteContract({
+  name: 'sessions.convertPendingInputToSteer',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    itemId: EntityIdSchema
+  }),
+  output: z.object({
+    item: PendingSessionInputRecordSchema
+  })
+})
+
+export const sessionsSteerPendingInputRoute = defineRouteContract({
+  name: 'sessions.steerPendingInput',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    itemId: EntityIdSchema
+  }),
+  output: z.object({
+    item: PendingSessionInputRecordSchema
+  })
+})
+
+export const sessionsDeletePendingInputRoute = defineRouteContract({
+  name: 'sessions.deletePendingInput',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    itemId: EntityIdSchema
+  }),
+  output: z.object({
+    deleted: z.literal(true)
+  })
+})
+
+export const sessionsResolveBlockedPendingInputRoute = defineRouteContract({
+  name: 'sessions.resolveBlockedPendingInput',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    itemId: EntityIdSchema,
+    action: z.enum(['retry', 'send_without_image_content'])
+  }),
+  output: z.object({
+    item: PendingSessionInputRecordSchema
+  })
+})
+
+export const sessionsRetryMessageRoute = defineRouteContract({
+  name: 'sessions.retryMessage',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    messageId: EntityIdSchema,
+    attachmentFallbackPolicy: AttachmentFallbackPolicySchema.optional()
+  }),
+  output: z.object({
+    retried: z.boolean(),
+    accepted: z.boolean(),
+    attachmentPreparation: AttachmentPreparationSummarySchema.optional()
+  })
+})
+
+export const sessionsDeleteMessageRoute = defineRouteContract({
+  name: 'sessions.deleteMessage',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    messageId: EntityIdSchema
+  }),
+  output: z.object({
+    deleted: z.literal(true)
+  })
+})
+
+export const sessionsEditUserMessageRoute = defineRouteContract({
+  name: 'sessions.editUserMessage',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    messageId: EntityIdSchema,
+    text: z.string()
+  }),
+  output: z.object({
+    message: ChatMessageRecordSchema
+  })
+})
+
+export const sessionsForkRoute = defineRouteContract({
+  name: 'sessions.fork',
+  input: z.object({
+    sourceSessionId: EntityIdSchema,
+    targetMessageId: EntityIdSchema,
+    newTitle: z.string().optional()
+  }),
+  output: z.object({
+    session: SessionWithStateSchema
+  })
+})
+
+export const sessionsSearchHistoryRoute = defineRouteContract({
+  name: 'sessions.searchHistory',
+  input: z.object({
+    query: z.string(),
+    options: z
+      .object({
+        limit: z.number().int().positive().optional()
+      })
+      .optional()
+  }),
+  output: z.object({
+    hits: z.array(HistorySearchHitSchema)
+  })
+})
+
+export const sessionsGetSearchResultsRoute = defineRouteContract({
+  name: 'sessions.getSearchResults',
+  input: z.object({
+    messageId: EntityIdSchema,
+    searchId: z.string().optional()
+  }),
+  output: z.object({
+    results: z.array(SearchResultSchema)
+  })
+})
+
+export const sessionsGetTapeContextRoute = defineRouteContract({
+  name: 'sessions.getTapeContext',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    entryIds: z.array(z.number().int().positive()).min(1).max(100),
+    options: z
+      .object({
+        before: z.number().int().min(0).max(20).optional(),
+        after: z.number().int().min(0).max(20).optional(),
+        limit: z.number().int().positive().max(100).optional(),
+        maxBytesPerEntry: z.number().int().min(0).max(8192).optional(),
+        maxTotalBytes: z.number().int().min(0).max(65536).optional(),
+        sourceSessionId: EntityIdSchema.trim().min(1).optional()
+      })
+      .optional()
+  }),
+  output: z.object({
+    context: AgentTapeContextResultSchema
+  })
+})
+
+export const sessionsListMessageTracesRoute = defineRouteContract({
+  name: 'sessions.listMessageTraces',
+  input: z.object({
+    messageId: EntityIdSchema
+  }),
+  output: z.object({
+    traces: z.array(MessageTraceRecordSchema),
+    manifests: z.array(DeepChatTapeViewManifestRecordSchema)
+  })
+}) satisfies RouteContract<'sessions.listMessageTraces'>
+
+export const sessionsExportMessageTapeReplaySliceRoute = defineRouteContract({
+  name: 'sessions.exportMessageTapeReplaySlice',
+  input: z.object({
+    messageId: EntityIdSchema,
+    options: z
+      .object({
+        requestSeq: z.number().int().positive().optional(),
+        includeTapePayloads: z.boolean().optional(),
+        includeTracePayload: z.boolean().optional()
+      })
+      .optional()
+  }),
+  output: z.object({
+    slice: DeepChatTapeReplaySliceSchema
+  })
+})
+
+export const sessionsTranslateTextRoute = defineRouteContract({
+  name: 'sessions.translateText',
+  input: z.object({
+    text: z.string(),
+    locale: z.string().optional(),
+    agentId: EntityIdSchema.optional()
+  }),
+  output: z.object({
+    text: z.string()
+  })
+})
+
+export const sessionsGetAgentsRoute = defineRouteContract({
+  name: 'sessions.getAgents',
+  input: z.object({}),
+  output: z.object({
+    agents: z.array(AgentSchema)
+  })
+})
+
+export const sessionsGetUsageDashboardRoute = defineRouteContract({
+  name: 'sessions.getUsageDashboard',
+  input: z.object({}).default({}),
+  output: z.object({
+    dashboard: UsageDashboardDataSchema
+  })
+})
+
+export const sessionsRetryRtkHealthCheckRoute = defineRouteContract({
+  name: 'sessions.retryRtkHealthCheck',
+  input: z.object({}).default({}),
+  output: z.object({
+    retried: z.boolean()
+  })
+})
+
+export const sessionsRenameRoute = defineRouteContract({
+  name: 'sessions.rename',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    title: z.string().min(1)
+  }),
+  output: z.object({
+    session: SessionWithStateSchema
+  })
+})
+
+export const sessionsTogglePinnedRoute = defineRouteContract({
+  name: 'sessions.togglePinned',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    pinned: z.boolean()
+  }),
+  output: z.object({
+    session: SessionWithStateSchema
+  })
+})
+
+export const sessionsClearMessagesRoute = defineRouteContract({
+  name: 'sessions.clearMessages',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    cleared: z.literal(true)
+  })
+})
+
+export const sessionsCompactRoute = defineRouteContract({
+  name: 'sessions.compact',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    compacted: z.boolean(),
+    state: SessionCompactionStateSchema
+  })
+})
+
+export const sessionsExportRoute = defineRouteContract({
+  name: 'sessions.export',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    format: z.enum(['markdown', 'html', 'txt', 'nowledge-mem'])
+  }),
+  output: z.object({
+    filename: z.string(),
+    content: z.string()
+  })
+})
+
+export const sessionsDeleteRoute = defineRouteContract({
+  name: 'sessions.delete',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    deleted: z.literal(true)
+  })
+})
+
+export const sessionsGetAgentTransferImpactRoute = defineRouteContract({
+  name: 'sessions.getAgentTransferImpact',
+  input: z.object({
+    agentId: EntityIdSchema
+  }),
+  output: z.object({
+    impact: AgentTransferImpactSchema
+  })
+})
+
+export const sessionsMoveAgentSessionsRoute = defineRouteContract({
+  name: 'sessions.moveAgentSessions',
+  input: z.object({
+    fromAgentId: EntityIdSchema,
+    toAgentId: EntityIdSchema
+  }),
+  output: z.object({
+    movedSessionIds: z.array(EntityIdSchema),
+    deletedSessionIds: z.array(EntityIdSchema)
+  })
+})
+
+export const sessionsDeleteAgentSessionsRoute = defineRouteContract({
+  name: 'sessions.deleteAgentSessions',
+  input: z.object({
+    agentId: EntityIdSchema
+  }),
+  output: z.object({
+    deletedSessionIds: z.array(EntityIdSchema)
+  })
+})
+
+export const sessionsMoveToAgentRoute = defineRouteContract({
+  name: 'sessions.moveToAgent',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    toAgentId: EntityIdSchema
+  }),
+  output: z.object({
+    session: SessionWithStateSchema
+  })
+})
+
+export const sessionsGetAcpSessionCommandsRoute = defineRouteContract({
+  name: 'sessions.getAcpSessionCommands',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    commands: z.array(AcpSessionCommandSchema)
+  })
+})
+
+export const sessionsGetAcpSessionConfigOptionsRoute = defineRouteContract({
+  name: 'sessions.getAcpSessionConfigOptions',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    state: AcpConfigStateSchema.nullable()
+  })
+})
+
+export const sessionsSetAcpSessionConfigOptionRoute = defineRouteContract({
+  name: 'sessions.setAcpSessionConfigOption',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    configId: z.string(),
+    value: z.union([z.string(), z.boolean()])
+  }),
+  output: z.object({
+    state: AcpConfigStateSchema.nullable()
+  })
+})
+
+export const sessionsGetPermissionModeRoute = defineRouteContract({
+  name: 'sessions.getPermissionMode',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    mode: PermissionModeSchema
+  })
+})
+
+export const sessionsSetPermissionModeRoute = defineRouteContract({
+  name: 'sessions.setPermissionMode',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    mode: PermissionModeSchema
+  }),
+  output: z.object({
+    updated: z.literal(true)
+  })
+})
+
+export const sessionsSetModelRoute = defineRouteContract({
+  name: 'sessions.setModel',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    providerId: z.string().min(1),
+    modelId: z.string().min(1)
+  }),
+  output: z.object({
+    session: SessionWithStateSchema
+  })
+})
+
+export const sessionsSetProjectDirRoute = defineRouteContract({
+  name: 'sessions.setProjectDir',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    projectDir: z.string().nullable()
+  }),
+  output: z.object({
+    session: SessionWithStateSchema
+  })
+})
+
+export const sessionsGetGenerationSettingsRoute = defineRouteContract({
+  name: 'sessions.getGenerationSettings',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    settings: SessionGenerationSettingsSchema.nullable()
+  })
+})
+
+export const sessionsGetDisabledAgentToolsRoute = defineRouteContract({
+  name: 'sessions.getDisabledAgentTools',
+  input: z.object({
+    sessionId: EntityIdSchema
+  }),
+  output: z.object({
+    disabledAgentTools: z.array(z.string())
+  })
+})
+
+export const sessionsUpdateDisabledAgentToolsRoute = defineRouteContract({
+  name: 'sessions.updateDisabledAgentTools',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    disabledAgentTools: z.array(z.string())
+  }),
+  output: z.object({
+    disabledAgentTools: z.array(z.string())
+  })
+})
+
+export const sessionsUpdateGenerationSettingsRoute = defineRouteContract({
+  name: 'sessions.updateGenerationSettings',
+  input: z.object({
+    sessionId: EntityIdSchema,
+    settings: SessionGenerationSettingsPatchSchema
+  }),
+  output: z.object({
+    settings: SessionGenerationSettingsSchema
+  })
+})

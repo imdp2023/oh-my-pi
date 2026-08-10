@@ -1,0 +1,579 @@
+{
+  "input": {
+    "placeholder": "Invia un messaggio a DeepChat, {'@'} per citare file, / per usare comandi",
+    "fileArea": "Area file",
+    "inputArea": "Area input",
+    "functionSwitch": "Interruttore funzioni",
+    "attach": "Aggiungi allegato",
+    "voiceInput": "Registrazione locale",
+    "voiceInputStop": "Ferma registrazione locale",
+    "voiceRecognitionUnsupportedTitle": "La registrazione locale non è supportata nell'ambiente corrente",
+    "voiceRecognitionUnsupportedDescription": "Usa questa funzione in un browser o ambiente desktop che supporti la registrazione dal microfono.",
+    "voiceRecognitionPermissionDeniedTitle": "Impossibile accedere al microfono",
+    "voiceRecognitionPermissionDeniedDescription": "Consenti a DeepChat di usare il microfono e riprova.",
+    "voiceRecognitionErrorTitle": "Trascrizione audio non riuscita",
+    "voiceRecognitionErrorDescription": "Impossibile completare la trascrizione audio. Riprova più tardi.",
+    "send": "Invia",
+    "steer": "Guida",
+    "queue": "Metti in coda",
+    "stop": "Ferma",
+    "fileSelect": "Seleziona file",
+    "pasteFiles": "Supporta copia e incolla di file",
+    "dropFiles": "Trascina qui i file",
+    "promptFilesAdded": "File prompt aggiunti",
+    "promptFilesAddedDesc": "{count} file aggiunti correttamente",
+    "promptFilesError": "Errore elaborazione file",
+    "promptFilesErrorDesc": "Elaborazione non riuscita per {count} file",
+    "historyPlaceholder": "(premi Tab per completare)",
+    "rateLimitQueue": "Coda {count}",
+    "rateLimitWait": "Attendi {seconds}s",
+    "rateLimitQueueTooltip": "{count} richieste in coda, intervallo di {interval} secondi",
+    "rateLimitReadyTooltip": "Puoi inviare la richiesta, intervallo di {interval} secondi",
+    "rateLimitWaitingTooltip": "Attendi ancora {seconds} secondi, intervallo di {interval} secondi",
+    "acpWorkdir": "Directory di lavoro",
+    "acpWorkdirTooltip": "Imposta directory di lavoro ACP",
+    "acpWorkdirSelect": "Seleziona directory di lavoro",
+    "acpWorkdirCurrent": "Directory di lavoro corrente: {path}",
+    "acpMode": "Modalità",
+    "acpModeTooltip": "Modalità corrente: {mode}",
+    "agentWorkspaceTooltip": "Imposta directory di lavoro Agent",
+    "agentWorkspaceSelect": "Seleziona directory di lavoro",
+    "agentWorkspaceCurrent": "Directory di lavoro corrente: {path}",
+    "workspaceUnavailableTooltip": "Directory inesistente o non accessibile: {path}",
+    "mcp": {
+      "badge": "MCP {count}",
+      "title": "MCP attivi",
+      "empty": "Nessun servizio attivo",
+      "openSettings": "Apri impostazioni MCP"
+    },
+    "tools": {
+      "badge": "Tools",
+      "title": "Tools",
+      "mcpSection": "MCP",
+      "pluginSection": "Plugin",
+      "builtinSection": "Strumenti integrati",
+      "loading": "Caricamento strumenti...",
+      "builtinEmpty": "Nessuno strumento integrato disponibile",
+      "groups": {
+        "agentFilesystem": "File system",
+        "agentCore": "Strumenti principali",
+        "agentImageGeneration": "Generazione immagini",
+        "agentSkills": "Strumenti Skills",
+        "deepchatSettings": "Impostazioni DeepChat",
+        "yobrowser": "YoBrowser"
+      }
+    },
+    "fileUploadFailed": "Elaborazione allegati non riuscita",
+    "fileUploadFailedDesc": "Impossibile elaborare {count} file: {names}",
+    "fileUploadFailedMore": " e altri {count}",
+    "unnamedFile": "file senza nome",
+    "audioInputUnsupportedTitle": "Il modello corrente non supporta allegati audio",
+    "audioInputUnsupportedDescription": "Il modello {model} non supporta input audio. {count} allegati audio ignorati."
+  },
+  "pendingInput": {
+    "steer": "Guida",
+    "queueCount": "In attesa {count}/{max}",
+    "toSteer": "Interrompi e invia",
+    "locked": "Bloccato",
+    "reorder": "Riordina",
+    "files": "{count} file",
+    "attachmentsOnly": "{count} allegati",
+    "empty": "Messaggio vuoto",
+    "limitReached": "Area di attesa piena (max {max}).",
+    "remove": "Rimuovi",
+    "steerUnavailable": "Impossibile interrompere ora",
+    "steerFailed": "Impossibile interrompere questo turno"
+  },
+  "features": {
+    "webSearch": "Ricerca web",
+    "thoughtForSeconds": "Ha ragionato per {seconds} secondi",
+    "thoughtForSecondsLoading": "Ragionamento in corso ({seconds}° secondo)",
+    "artifactThinking": "Ragionamento artifact",
+    "modeChanged": "Modalità cambiata in: {mode}"
+  },
+  "search": {
+    "results": "Trovate {0} pagine web",
+    "searching": "Ricerca in corso...",
+    "title": "Risultati ricerca",
+    "description": "Trovati {0} risultati pertinenti",
+    "optimizing": "Estrazione dell'intento di ricerca...",
+    "reading": "Ricerca e lettura pagine web...",
+    "error": "Ricerca non riuscita"
+  },
+  "messages": {
+    "thinking": "Ragionamento in corso...",
+    "rateLimitWaiting": "Limite di frequenza raggiunto, attesa in coda...",
+    "rateLimitCompactLoading": "Limitazione attiva ({seconds} secondi)",
+    "rateLimitTitle": "Limite di frequenza richieste",
+    "rateLimitQueue": "Posizione in coda",
+    "rateLimitEstimated": "Attesa stimata",
+    "rateLimitQuickSettings": "Regola limite",
+    "rateLimitSwitchProvider": "Cambia provider",
+    "rateLimitImmediately": "Subito",
+    "rateLimitSeconds": "secondi",
+    "rateLimitMinutes": "minuti"
+  },
+  "compaction": {
+    "compacting": "Compressione contesto...",
+    "compacted": "Contesto compresso",
+    "commandDescription": "Comprimi il contesto della sessione",
+    "noopTitle": "Nessun contesto da comprimere",
+    "noopDescription": "Non c'è ancora nuova cronologia della conversazione da comprimere.",
+    "failedTitle": "Compressione non riuscita"
+  },
+  "rateLimit": {
+    "queueTooltip": "{count} richieste in coda, intervallo di {interval} secondi",
+    "readyTooltip": "Puoi inviare la richiesta, intervallo di {interval} secondi",
+    "waitingTooltip": "Attendi ancora {seconds} secondi, intervallo di {interval} secondi"
+  },
+  "notify": {
+    "generationComplete": "Generazione completata",
+    "generationError": "Generazione non riuscita"
+  },
+  "toolCall": {
+    "title": "Chiamata strumento",
+    "calling": "Chiamata strumento in corso",
+    "response": "Risposta strumento",
+    "end": "Chiamata strumento completata",
+    "error": "Errore chiamata strumento",
+    "clickToView": "Fai clic per vedere i dettagli",
+    "functionName": "Nome funzione",
+    "params": "Parametri",
+    "responseData": "Dati risposta",
+    "subagents": {
+      "summary": "{mode} · {count} subagent",
+      "unnamedTask": "Attività senza nome",
+      "mode": {
+        "parallel": "Parallelo",
+        "chain": "Sequenziale"
+      },
+      "status": {
+        "queued": "In coda",
+        "running": "In esecuzione",
+        "completed": "Completato",
+        "error": "Errore",
+        "cancelled": "Annullato",
+        "waiting_permission": "In attesa di autorizzazione",
+        "waiting_question": "In attesa di input"
+      }
+    }
+  },
+  "mode": {
+    "current": "Modalità corrente: {mode}",
+    "agent": "Agent",
+    "acpAgent": "ACP Agent"
+  },
+  "topbar": {
+    "backToParent": "Torna alla conversazione padre",
+    "share": "Condividi",
+    "more": "Altro"
+  },
+  "subagents": {
+    "label": "subagent"
+  },
+  "advancedSettings": {
+    "button": "Configurazione avanzata",
+    "title": "Configurazione avanzata",
+    "closeHint": "Premi Esc per chiudere",
+    "systemPrompt": "Prompt di sistema",
+    "systemPromptPlaceholder": "Seleziona preset",
+    "temperature": "Temperatura",
+    "topP": "Top P",
+    "topPDescription": "Campionamento nucleus; lascia vuoto per usare il valore predefinito del provider",
+    "contextLength": "Lunghezza contesto",
+    "maxTokens": "Output massimo",
+    "thinkingBudget": "Budget ragionamento",
+    "verbosity": "Dettaglio risposta",
+    "forceInterleavedThinkingCompat": "Interleaved Thinking",
+    "forceInterleavedThinkingCompatDescription": "Controlla se la sessione corrente gestisce i messaggi di reasoning e tool-call con Interleaved Thinking.",
+    "verbosityPlaceholder": "Seleziona livello di dettaglio",
+    "currentCustomPrompt": "Personalizzato corrente",
+    "useDefault": "Usa predefinito",
+    "decreaseValue": "Diminuisci {label}",
+    "increaseValue": "Aumenta {label}",
+    "toggleValue": "Cambia {label}",
+    "validation": {
+      "finiteNumber": "Deve essere un numero finito",
+      "nonNegativeInteger": "Deve essere un intero non negativo",
+      "contextLengthAtLeastMaxTokens": "Deve essere maggiore o uguale all'output massimo",
+      "maxTokensWithinContextLength": "Deve essere minore o uguale alla lunghezza contesto",
+      "topPRange": "Deve essere maggiore di 0 e minore o uguale a 1"
+    }
+  },
+  "modelPicker": {
+    "empty": "Nessun modello trovato",
+    "audioInputSupported": "Input audio supportato"
+  },
+  "audio": {
+    "play": "Riproduci",
+    "pause": "Pausa"
+  },
+  "call": {
+    "title": "Chiamata Voice.ai",
+    "description": "Fai clic per connetterti all'Agent vocale Voice.ai; parla dopo che la chiamata è connessa.",
+    "start": "Avvia chiamata vocale",
+    "stop": "Termina chiamata",
+    "end": "Riaggancia"
+  },
+  "skills": {
+    "indicator": {
+      "active": "{count} Skills fissate",
+      "none": "Nessuna Skill fissata"
+    },
+    "panel": {
+      "title": "Skills fissate",
+      "manage": "Gestisci",
+      "empty": "Nessuna Skill installata"
+    }
+  },
+  "workspace": {
+    "title": "Workspace",
+    "collapse": "Comprimi",
+    "expand": "Espandi",
+    "sections": {
+      "files": "File",
+      "git": "Git",
+      "artifacts": "Artifacts",
+      "subagents": "subagent"
+    },
+    "plan": {
+      "section": "Piano",
+      "empty": "Nessuna attività",
+      "itemAriaLabel": "{status}: {step}",
+      "status": {
+        "pending": "Da fare",
+        "in_progress": "In corso",
+        "completed": "Completato",
+        "interrupted": "Interrotto"
+      },
+      "completedCount": "{completed}/{total} completati"
+    },
+    "files": {
+      "section": "File",
+      "empty": "Nessun file",
+      "loading": "Caricamento file...",
+      "noWorkspace": {
+        "title": "Nessun workspace",
+        "description": "Seleziona o trascina una cartella per impostare il workspace",
+        "button": "Seleziona cartella"
+      },
+      "contextMenu": {
+        "openFile": "Apri file",
+        "revealInFolder": "Mostra nel file manager",
+        "insertPath": "Inserisci nell'input"
+      },
+      "watchStatus": {
+        "degraded": "Il monitoraggio è in modalità di fallback. Le modifiche potrebbero aggiornarsi più lentamente.",
+        "failed": "Il monitoraggio dei file non è disponibile. Aggiorna o seleziona di nuovo lo spazio di lavoro."
+      }
+    },
+    "git": {
+      "empty": "Nessun diff da mostrare",
+      "clean": "Workspace pulito",
+      "staged": "In staging",
+      "unstaged": "Non in staging"
+    },
+    "subagents": {
+      "empty": "Nessuna sessione subagent",
+      "self": "Agent corrente",
+      "status": {
+        "working": "In esecuzione",
+        "error": "Errore",
+        "idle": "Inattivo"
+      }
+    },
+    "browser": {
+      "section": "Browser",
+      "empty": "Nessuna scheda"
+    },
+    "terminal": {
+      "section": "Terminale",
+      "empty": "Nessun output",
+      "contextMenu": {
+        "terminate": "Termina comando",
+        "delete": "Elimina record",
+        "expand": "Espandi vista",
+        "collapse": "Comprimi"
+      },
+      "output": {
+        "truncated": "[troncato]"
+      },
+      "noOutput": "Nessun output",
+      "status": {
+        "running": "In esecuzione",
+        "completed": "Riuscito",
+        "failed": "Non riuscito",
+        "timed_out": "Timeout",
+        "aborted": "Interrotto"
+      }
+    }
+  },
+  "newThread": {
+    "title": "Costruisci ed esplora"
+  },
+  "floatingWidget": {
+    "title": "Panoramica attività",
+    "collapse": "Comprimi elenco sessioni flottante",
+    "empty": "Nessuna sessione Agent al momento",
+    "executing": "In corso",
+    "sessionCount": "{count} sessioni",
+    "untitled": "Nuova chat",
+    "status": {
+      "inProgress": "In corso",
+      "done": "Completato",
+      "error": "Errore"
+    }
+  },
+  "permissionMode": {
+    "default": "Permessi predefiniti",
+    "fullAccess": "Accesso completo",
+    "autoApprove": "Approva per me"
+  },
+  "sidebar": {
+    "allAgents": "Tutti gli Agents",
+    "expandSidebar": "Espandi barra laterale",
+    "collapseSidebar": "Comprimi barra laterale",
+    "themeToggle": "Cambia tema",
+    "themeLight": "Chiaro",
+    "themeDark": "Scuro",
+    "themeSystem": "Sistema",
+    "remoteControlDisabled": "Non attivo",
+    "remoteControlStatus": {
+      "disabled": "Controllo remoto disattivato",
+      "stopped": "Controllo remoto fermo",
+      "starting": "Avvio controllo remoto",
+      "running": "Controllo remoto in esecuzione",
+      "backoff": "Nuovo tentativo controllo remoto",
+      "error": "Errore controllo remoto"
+    },
+    "groupByDate": "Raggruppa per data",
+    "groupByProject": "Raggruppa per progetto",
+    "pinned": "Conversazioni fissate",
+    "chats": "Chat",
+    "emptyTitle": "Ancora nessuna conversazione",
+    "emptyDescription": "Avvia una nuova conversazione",
+    "searchPlaceholder": "Cerca titolo conversazione",
+    "searchAriaLabel": "Cerca titolo conversazione",
+    "searchEmptyTitle": "Nessuna conversazione corrispondente",
+    "searchEmptyDescription": "Prova con un'altra parola chiave nel titolo",
+    "projectGroupActions": "Azioni del gruppo progetto",
+    "moveProjectGroupTop": "Sposta in cima",
+    "moveProjectGroupUp": "Sposta su",
+    "moveProjectGroupDown": "Sposta giù",
+    "moveProjectGroupBottom": "Sposta in fondo",
+    "searchCommand": "Search",
+    "chatSection": "Chat",
+    "workspace": "Workspace",
+    "searchLoadedRangeDescription": "Visualizzazione delle corrispondenze dalle conversazioni caricate. Scorri per caricare altra cronologia."
+  },
+  "spotlight": {
+    "placeholder": "Cerca conversazioni, Agent, impostazioni e azioni…",
+    "searching": "Ricerca…",
+    "emptyTitle": "Nessun risultato",
+    "emptyDescription": "Prova un'altra parola chiave o apri una sessione recente.",
+    "hints": "↑↓ seleziona · Enter apre · Esc chiude · Home/End salta",
+    "kind": {
+      "session": "Sessione",
+      "message": "Messaggio",
+      "agent": "Agent",
+      "setting": "Impostazione",
+      "action": "Azione"
+    }
+  },
+  "inlineSearch": {
+    "placeholder": "Cerca nella conversazione corrente",
+    "ariaLabel": "Cerca nella conversazione corrente",
+    "previous": "Corrispondenza precedente",
+    "next": "Corrispondenza successiva",
+    "close": "Chiudi ricerca"
+  },
+  "onboarding": {
+    "agentSwitch": {
+      "title": "Passa a DeepChat Agent",
+      "description": "Prima di chattare, torna da ACP Agent al flusso conversazione DeepChat.",
+      "caption": "Fai clic sul pulsante Agent evidenziato nella barra laterale per continuare."
+    },
+    "switchModel": {
+      "description": "Scegli il modello da usare per la tua prima conversazione DeepChat.",
+      "caption": "Usa il selettore modello evidenziato e scegli un modello disponibile."
+    },
+    "firstChat": {
+      "description": "Ora è tutto pronto. Invia qui il primo messaggio per completare la guida.",
+      "caption": "L'evidenziazione resterà sul campo di input finché non invii il primo messaggio."
+    }
+  },
+  "messageReceipt": {
+    "unread": "Non letto",
+    "read": "Letto"
+  },
+  "attachments": {
+    "chooseRepresentation": "Scegli come inviare {name}",
+    "representation": "Rappresentazione dell’allegato",
+    "auto": "Automatico",
+    "sendImage": "Invia immagine",
+    "useOcrText": "Usa testo OCR",
+    "useEmbeddedText": "Usa testo incorporato",
+    "preparing": "Elaborazione degli allegati…",
+    "actionRequiredTitle": "Un allegato richiede attenzione",
+    "actionRequiredDescription": "Uno o più allegati non possono essere utilizzati. Scegli come continuare.",
+    "attachmentNumber": "Allegato {number}",
+    "moreIssues": "Altri {count} problemi con gli allegati",
+    "genericUnavailable": "Non è disponibile alcun contenuto allegato utilizzabile.",
+    "keepDraft": "Conserva bozza",
+    "switchVisionModel": "Passa a un modello con capacità visive",
+    "retry": "Riprova",
+    "sendWithoutImageContent": "Ignora contenuto allegato",
+    "inspectOcrText": "Visualizza testo OCR",
+    "ocrBadge": "OCR",
+    "embeddedTextBadge": "Testo",
+    "ocrPartialBadge": "OCR · Parziale",
+    "ocrLimitedBadge": "OCR · Limitato",
+    "imageBadge": "Immagine",
+    "unavailableBadge": "Non disponibile",
+    "ocrPreviewTitle": "Testo OCR — {name}",
+    "ocrPreviewDescription": "Sono stati inviati circa {tokens} token come contenuto non attendibile dell’allegato.",
+    "ocrPageCoverage": "Include testo fino alla pagina {page}.",
+    "ocrPageCoveragePartial": "Include parte della pagina {page}.",
+    "ocrTextTruncated": "Questo testo OCR è stato troncato prima dell’invio.",
+    "reasons": {
+      "automatic_ocr_disabled": "L’OCR automatico è disattivato.",
+      "document_limit_exceeded": "È possibile elaborare con OCR un solo PDF per richiesta.",
+      "document_too_large": "Il PDF supera il limite di dimensione del file.",
+      "image_dimensions_exceeded": "Le dimensioni dell’immagine decodificata superano il limite di sicurezza.",
+      "image_limit_exceeded": "Questo turno contiene più immagini di quante l’OCR possa elaborarne.",
+      "image_payload_unavailable": "I dati dell’immagine originale non sono più disponibili.",
+      "image_too_large": "L’immagine supera il limite di dimensione per file.",
+      "ocr_cancelled": "L’OCR è stato annullato.",
+      "ocr_empty": "L’OCR non ha trovato testo utilizzabile.",
+      "ocr_failed": "L’OCR non ha potuto elaborare questo allegato.",
+      "ocr_queue_full": "L’OCR è occupato. Riprova al termine dell’allegato corrente.",
+      "ocr_resource_limited": "L’OCR si è fermato al limite di elaborazione del PDF.",
+      "ocr_runtime_unavailable": "L’OCR non è disponibile su questa piattaforma o installazione.",
+      "invalid_attachment_snapshot": "I dati OCR salvati non sono validi.",
+      "turn_ocr_budget_exhausted": "Il testo OCR supera il limite di testo allegato di questo messaggio.",
+      "pdf_text_unavailable": "In questo PDF non è disponibile testo incorporato.",
+      "requested_image_requires_vision": "“Invia immagine” richiede un modello con capacità visive.",
+      "turn_image_bytes_exceeded": "Le immagini di questo turno superano il limite di dimensione totale.",
+      "user_skipped_attachment_content": "Il contenuto dell’allegato è stato omesso su tua richiesta.",
+      "user_skipped_image_content": "Il contenuto dell’immagine è stato omesso su tua richiesta.",
+      "unsupported_image_format": "Questo formato immagine non è supportato dall’OCR."
+    },
+    "pending": {
+      "blockedCount": "{count} bloccati",
+      "blocked": "Bloccato",
+      "retry": "Riprova OCR",
+      "sendWithoutImageContent": "Ignora contenuto allegato",
+      "blockedDescription": "Questo elemento è in attesa di una decisione sull’allegato.",
+      "blockedReasonMore": "{reason} Sono presenti anche altri {count} problemi.",
+      "resolveFailed": "Impossibile risolvere il messaggio bloccato"
+    }
+  },
+  "skillDraft": {
+    "confirmationTitle": "Bozza di skill",
+    "confirmationQuestion": "È stata generata una bozza di skill: {name}",
+    "previewTitle": "Anteprima del contenuto della bozza",
+    "actions": {
+      "view": "Visualizza contenuto",
+      "viewDescription": "Visualizza in anteprima il contenuto SKILL.md della bozza",
+      "install": "Installa come skill",
+      "installDescription": "Importala nella cartella delle skill per la gestione",
+      "discard": "Scarta",
+      "discardDescription": "Elimina questa bozza temporanea"
+    },
+    "result": {
+      "viewed": "L’anteprima del contenuto della bozza è aperta. Scegli se installarla o scartarla.",
+      "installed": "Bozza di skill installata: {name}",
+      "discarded": "Bozza di skill scartata.",
+      "failed": "Impossibile gestire la bozza di skill: {error}"
+    }
+  },
+  "activityCollapse": {
+    "workedFor": "Ha lavorato per {duration}",
+    "reasoningCount": "{count} ragionamento/i",
+    "toolCallCount": "{count} chiamata/e strumento",
+    "expandLabel": "Espandi {title}",
+    "collapseLabel": "Comprimi {title}",
+    "duration": {
+      "day": "g ",
+      "hour": "h ",
+      "minute": "min ",
+      "second": "s"
+    }
+  },
+  "memory": {
+    "toolbar": "Memorie usate",
+    "status": {
+      "archived": "Dimenticata"
+    },
+    "actions": {
+      "undo": "Annulla",
+      "forget": "Dimentica",
+      "edit": "Modifica"
+    },
+    "chip": {
+      "title": "Memoria aggiornata {count}",
+      "heading": "Memoria aggiornata",
+      "description": "Questo turno ha aggiunto le seguenti memorie."
+    },
+    "selection": {
+      "remember": "Ricorda questo"
+    },
+    "turn": {
+      "title": "Memorie usate in questo turno",
+      "empty": "Nessuna memoria è stata iniettata per questo turno",
+      "selected": "Selezionate",
+      "dropped": "Scartate",
+      "tokens": "Token",
+      "budget": "Budget",
+      "allocation": "Allocazione del budget del contributo",
+      "directive": "Direttiva",
+      "persona": "Persona",
+      "working": "Memoria di lavoro",
+      "queryRecall": "Richiamo per query",
+      "overhead": "Sovraccarico",
+      "unused": "Inutilizzato",
+      "overheadSummary": "Sovraccarico {overhead} · Inutilizzato {unused}",
+      "countOnly": "Questo record contiene solo un riepilogo numerico.",
+      "unavailable": "Questa memoria non è più disponibile.",
+      "noSelectedDetails": "Non ci sono dettagli di memoria da mostrare per questo turno.",
+      "refreshFailed": "Aggiornamento non riuscito. Vengono mostrate le memorie caricate più di recente.",
+      "error": "Impossibile caricare i ricordi usati in questo turno."
+    },
+    "toast": {
+      "undoSuccess": "Memoria annullata",
+      "undoFailed": "Impossibile annullare la memoria",
+      "forgetSuccess": "Memoria dimenticata",
+      "forgetFailed": "Impossibile dimenticare la memoria",
+      "amendFailed": "Impossibile aggiornare la memoria",
+      "rememberFailed": "Impossibile salvare la memoria",
+      "add": {
+        "created": "Salvata come nuova memoria",
+        "updated": "Memoria esistente aggiornata",
+        "superseded": "Unita in una memoria aggiornata",
+        "challenged": "Registrata come memoria da verificare",
+        "noop": "Nessuna nuova memoria aggiunta"
+      }
+    },
+    "errors": {
+      "actionFailed": "Azione non riuscita. Riprova.",
+      "amendRetryable": "La modifica non è riuscita. La memoria originale è stata ripristinata; riprova.",
+      "amendRestoreFailed": "La modifica non è riuscita e non è stato possibile ripristinare la memoria originale."
+    }
+  },
+  "orchestration": {
+    "actions": { "openChild": "Apri Agent secondario" },
+    "activityTitle": "Attività Agent",
+    "proactive": {
+      "title": "Collaborazione proattiva",
+      "description": "Consente all’Agent principale di delegare quando il lavoro indipendente o parallelo offre un vantaggio chiaro. Può usare più tempo, token e risorse.",
+      "reasons": {
+        "session_unavailable": "Questa sessione non è più disponibile.",
+        "agent_unavailable": "L’Agent selezionato non è disponibile.",
+        "deepchat_agent_required": "La collaborazione proattiva richiede un DeepChat Agent.",
+        "regular_parent_required": "La collaborazione proattiva non è disponibile in una sessione figlia.",
+        "agent_policy_unavailable": "Impossibile caricare il criterio di collaborazione.",
+        "subagents_disabled": "Abilita i Subagents per questo Agent per usare la collaborazione proattiva."
+      }
+    }
+  }
+}

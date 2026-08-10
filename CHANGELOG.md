@@ -1,0 +1,757 @@
+# Changelog
+
+## v1.1.0-beta.12 (2026-08-07)
+- Added proactive multi-Agent collaboration with live child Sessions, progress tracking, controls, and result handoff
+- Added a bundled local `deepchat` CLI for inference, media, OCR, artifacts, Agent runs, provider and model administration, Settings, Skills, and MCP operations
+- Added native web search for supported DeepSeek V4 Flash models, with a per-turn toggle, visible search activity, and source links
+- Added OrcaRouter as a built-in provider with live model discovery
+- Upgraded the bundled Computer Use driver to 0.17.0 with snapshot-bound targeting, post-action verification, and new window, menu, and clipboard tools
+- Persisted images generated through MCP tools so they remain available after restart and in follow-up actions
+- Improved compatibility with large MCP tool catalogs and equivalent JSON schemas
+- Standardized UI controls and refined interface motion, hover behavior, and reduced-motion feedback
+- Upgraded Light OCR to 0.5.7, Electron to 41.10.4, and the bundled Node.js runtime to 24.18.0
+- Restored provider database refreshes for larger catalogs and refreshed model and Agent registries
+- Fixed long unbroken text expanding the chat composer, untranslated confirmation labels, and scheduler restart and manual-run feedback
+- 新增主动式多 Agent 协作，支持实时子会话、进度跟踪、控制与结果回传
+- 新增内置本地 `deepchat` CLI，覆盖推理、媒体生成、OCR、产物管理、Agent 运行、Provider 与模型管理、设置、Skills 和 MCP 操作
+- 为支持的 DeepSeek V4 Flash 模型新增原生联网搜索，提供逐轮开关、可见搜索过程与来源链接
+- 新增 OrcaRouter 内置 Provider，并支持动态获取模型列表
+- 将内置 Computer Use 驱动升级至 0.17.0，新增基于快照的目标定位、操作后验证，以及窗口、菜单和剪贴板工具
+- 持久化 MCP 工具生成的图片，确保重启后及后续操作中仍可使用
+- 改进大型 MCP 工具目录及等价 JSON Schema 的兼容性
+- 统一界面控件，并优化动效、悬停行为与减少动态效果反馈
+- 将 Light OCR 升级至 0.5.7、Electron 升级至 41.10.4，并将内置 Node.js 运行时升级至 24.18.0
+- 恢复大型 Provider 数据库的刷新能力，并更新模型与 Agent 注册表
+- 修复无空格长文本撑宽聊天输入框、确认按钮未翻译，以及调度器重启与手动运行反馈异常
+
+## v1.1.0-beta.11 (2026-07-31)
+- Tolerated invalid MCP tool output schemas without rejecting otherwise usable tools
+- 容忍无效的 MCP 工具输出 Schema，避免拒绝其他可用工具
+
+## v1.1.0-beta.10 (2026-07-31)
+- Improved alert confirmations and notification feedback so user actions report reliable results
+- Added MCP v2 ecosystem support and a built-in McDonald's server
+- Upgraded Light OCR to 0.5.6 and moved OCR management into Plugins Hub
+- Redesigned Steer messages as IM-style conversations
+- Deferred automatic updates until active tasks finish
+- Fixed provider image inputs by sending file parts where required
+- Removed dashboard usage cost figures and hardened locale resolution
+- Restored scheduled package regression checks
+- Upgraded the bundled Computer Use driver to v0.14.1
+- 改进提醒确认与通知反馈，确保用户操作能够可靠地显示结果
+- 支持 MCP v2 生态，并新增 McDonald's 内置服务器
+- 将 Light OCR 升级至 0.5.6，并将 OCR 管理移至 Plugins Hub
+- 将 Steer 消息重做为类似即时通讯的对话形式
+- 延迟自动更新安装，避免打断正在执行的任务
+- 修复部分 Provider 的图片输入，按要求改用文件分片发送
+- 移除 Dashboard 费用估算，并强化语言环境解析
+- 恢复定时软件包回归检查
+- 内置 Computer Use 驱动升级至 v0.14.1
+
+## v1.1.0-beta.9 (2026-07-29)
+- Added Directives to Agent Memory: instructions you write take effect immediately, instructions the model suggests stay as drafts until you approve them, and suppression directives keep a topic out of recalled memory. Clearing memories now keeps your directives
+- Made Agent Memory time-aware: it records when a fact was true, so expired plans and outdated states are no longer recalled as current; corrections and deletions now stick instead of reappearing in the next conversation; and memory maintenance runs incrementally instead of rescanning everything
+- Added fully offline PDF OCR (Light-OCR 0.5.5): multi-page recognition with a per-attachment Auto / Text / OCR switch, page-aware truncation that reports which pages were included, and results cached and reused across history, retry, export and search
+- Added GreenPT and Modelsell as built-in providers, with model lists fetched live from the provider
+- Fixed enabling Computer Use blacking out the desktop on Linux/X11: the driver now starts only when a tool actually needs it, its files are verified before every launch, and a runtime that exits uncleanly is quarantined with Test runtime and Retry runtime controls in Settings
+- Upgraded the bundled Computer Use driver to v0.13.1, and added a read-only picture-in-picture showing the latest snapshot of the app being controlled
+- Made native preview support load only on first use so missing dependencies no longer affect startup: Browser opens in the side panel when native preview is unavailable, Computer Use keeps working without picture-in-picture, and Windows x64 now uses a statically linked runtime to reduce missing-DLL launch failures
+- Fixed model context and output limits being overwritten on refresh, reset, restart and backup restore — GPT-5.6-sol on New API was capped at 16000/4096 instead of 1050000/32000 — and fixed Kimi K3 on New API sending temperature and top_p, which it does not support
+- Replaced the startup window with an animated DeepChat splash
+- Redesigned the Settings overview and usage dashboard: hovering a day in the activity calendar now shows that day's input, output and cache-hit tokens. The usage trend chart and estimated cost figures have been removed
+- Fixed confirming a message deletion doing nothing, and delete failures now show an error instead of failing silently
+- Fixed three Agent Skills issues: importing from another Agent failing with "An object could not be cloned", a failed skill snapshot migration blocking startup, and the skill list flickering when toggling a skill on or off
+- Agent Memory 新增 Directives（长期指令）：自己写的指令立即生效，模型建议的指令先存为草稿、经你确认后才生效，抑制类指令可以让某个话题不再被记忆召回。清空记忆时会保留这些指令
+- Agent Memory 现在理解时间：会记录一条信息在什么时间范围内成立，过期的计划和已失效的状态不再被当作当前事实召回；纠正和删除会真正生效，不会在下一次对话里重新冒出来；记忆整理改为增量进行，不再每次全量扫描
+- 新增完全离线的 PDF OCR（Light-OCR 0.5.5）：支持多页识别，每个附件可单独选择 Auto / 文本 / OCR；超出限制时会明确告知识别到了哪些页面。识别结果会缓存，并在历史、重试、导出和搜索中复用
+- 新增 GreenPT 与 Modelsell 两个内置 Provider，模型列表从服务商动态获取
+- 修复 Linux/X11 下启用 Computer Use 导致桌面黑屏的问题：驱动改为在工具真正需要时才启动，每次启动前校验文件完整性；异常退出的运行时会被隔离，并在设置中提供「测试运行时」和「重试运行时」操作
+- 内置 Computer Use 驱动升级至 v0.13.1，并新增只读画中画，显示被操作应用的最新截图
+- 原生预览能力改为首次使用时才加载，避免依赖缺失影响应用启动：原生预览不可用时 Browser 自动打开侧边栏、Computer Use 不显示画中画但功能照常；Windows x64 改用静态链接运行时，减少缺少 DLL 导致的启动失败
+- 修复模型上下文与输出上限在刷新、重置、重启和备份恢复后被覆盖的问题（New API 下 GPT-5.6-sol 会被限制为 16000/4096 而非 1050000/32000），以及 New API 下 Kimi K3 发送了它并不支持的 temperature 和 top_p
+- 启动窗口更换为带动画的 DeepChat 启动页
+- 重做设置概览页与用量面板：在活跃日历上悬停某一天可查看当天的输入、输出与缓存命中 token。已移除用量趋势图和费用估算
+- 修复点击确认删除消息后没有任何反应的问题，删除失败时也会给出错误提示而不再静默失败
+- 修复 Agent Skills 的三个问题：从其他 Agent 导入时报「An object could not be cloned」、技能快照迁移失败会阻塞启动、开关技能时列表闪烁
+
+## v1.1.0-beta.8 (2026-07-26)
+- Added fully offline OCR for image attachments (Light-OCR): images are routed to vision or OCR based on the selected model, OCR text is reused across history, retry, edit and compaction, and per-attachment mode, cancellation and cache controls are available in Settings
+- Gave every Agent its own Skills root and catalog, replacing the shared catalog and its sync workflow with explicit import from another Agent or from an external DeepChat data directory
+- Rebuilt the Agent browser picture-in-picture as a native overlay: open-in-side-panel and close controls, dragging outside the DeepChat window, with the Canvas overlay kept as a fallback
+- Added Routerra, Straico, and StepFun Token Plan as built-in provider presets
+- Added Linux ARM64 installers, and gave the macOS DMG installer a proper drag-to-install window with a background image and the app and Applications icons aligned to it
+- Made long conversations reuse the provider prompt cache: the system prompt no longer changes whenever a summary, handoff state or memory updates, cache markers now reach the request for OpenAI, Anthropic, Bedrock, OpenRouter and Zenmux, and compaction sizes the retained history to the model's context budget
+- Retried transient provider failures with bounded, abortable backoff, and never replayed a request once text, reasoning or tool output was committed
+- Stopped executing tool calls truncated by `max_tokens`: the batch is rejected atomically, matching error results are written, and the request is retried once
+- Restructured the Agent runtime into a one-directional owner graph behind a harness facade, added a typed tool execution contract that keeps write-capable tools sequential, and rebuilt Hooks on a typed event pipeline with bounded command execution
+- Fixed chat search highlights on streamed rows, sidebar search pagination, the invisible pending-assistant row, session-restore scrolling that overrode a search or spotlight jump, and session revision recovery on existing databases
+- Cut Settings startup cost by lazy-loading locales (synchronous JS 4.25 MB to 0.9 MB) and reduced Dashboard CPU with cached formatters and polling that pauses in the background
+- Fixed auto-update failing with `Invalid input: expected string, received Date`: updater metadata is now published with a quoted releaseDate and validated against electron-updater's own parser across all four channel files
+- Fixed the macOS clean-install Gatekeeper failure caused by the bundled Computer Use helper, and added distribution verification for both the app and the macOS updater payload
+- Rebuilt the release pipeline to verify every published package before release, and locked dependencies with a tracked pnpm lockfile for reproducible builds
+- 新增完全离线的图片附件 OCR（Light-OCR）：根据所选模型自动在视觉与 OCR 之间路由，OCR 文本在历史、重试、编辑与压缩中复用，并提供逐附件模式、取消与缓存管理
+- 每个 Agent 拥有独立的 Skills 根目录与目录管理，取消共享目录与同步流程，改为从其他 Agent 或外部 DeepChat 数据目录显式导入
+- 将 Agent 浏览器画中画重构为原生浮窗：提供打开侧边栏与关闭按钮，可拖动到 DeepChat 窗口之外，并保留 Canvas 浮层作为回退方案
+- 新增 Routerra、Straico 与 StepFun Token Plan 内置 Provider
+- 新增 Linux ARM64 安装包；macOS DMG 安装窗口改为带背景图的拖拽安装界面，应用图标与 Applications 快捷方式按背景对齐
+- 让长对话真正复用 Provider 的提示词缓存：系统提示词不再随摘要、handoff 状态与记忆的更新而变化，缓存标记能正确传给 OpenAI、Anthropic、Bedrock、OpenRouter 与 Zenmux，压缩时按模型上下文预算保留近期历史
+- 对瞬时 Provider 失败进行有界、可中断的退避重试，并在已产出文本、思考或工具调用后不再重放请求
+- 不再执行被 `max_tokens` 截断的工具调用：整批原子拒绝并写入对应错误结果，随后仅自动重试一次
+- 将 Agent runtime 重构为 harness facade 之上的单向 owner 图，引入类型化工具执行契约（可写工具强制串行），并将 Hook 重建为类型化事件管道与有界命令执行
+- 修复流式消息的搜索高亮、侧边栏搜索分页、待生成消息行不可见、会话恢复滚动覆盖搜索/聚光跳转，以及已有数据库的 session revision 恢复问题
+- 懒加载语言包降低设置页启动开销（同步 JS 4.25 MB 降至 0.9 MB），并通过缓存 formatter 与后台暂停轮询降低 Dashboard CPU 占用
+- 修复自动更新报错 `Invalid input: expected string, received Date`：发布端强制为 releaseDate 加引号，并用 electron-updater 自身的解析器校验全部四个更新渠道文件
+- 修复由内置 Computer Use 助手导致的 macOS 全新安装 Gatekeeper 失败，并对应用与 macOS 更新包补充分发校验
+- 重构发布流水线，发布前校验每个产物；纳入 pnpm lockfile 锁定依赖，保证构建可复现
+
+## v1.1.0-beta.4 (2026-07-19)
+- Added browser session import and an agent picture-in-picture view
+- Improved Feishu delivery error feedback and test user-data directory handling
+- Reworked the Tape runtime into layered architecture with improved session recall reliability
+- Restructured the chat main renderer and added rendering performance diagnostics
+- 新增浏览器会话导入与 Agent 画中画视图
+- 改进飞书投递错误反馈及测试用户数据目录处理
+- 将 Tape runtime 重构为分层架构，提升会话召回可靠性
+- 重构聊天主渲染器并新增渲染性能诊断
+
+## v1.1.0-beta.3 (2026-07-17)
+- Reworked the overall architecture and improved reliability
+- 重构整体架构，提升可靠性
+
+## v1.1.0-beta.2 (2026-07-16)
+- Centralized Subagent capability policy ownership across the agent runtime and sessions
+- Added explicit subagent tape lineage with linked tape views and cross-tape recall
+- Separated Tape runtime tool capabilities for clearer isolation
+- Split agent runtime lifecycle owners and tightened message, permission, and stop boundaries
+- Improved renderer interaction quality for panels, MCP market, and message actions
+- Stabilized chat scroll ownership and hardened session view ownership
+- Fixed Agent Memory provider cancellation and config ABA fence bypass
+- Upgraded markstream-vue and stream-monaco for streaming render alignment
+- 集中管理 Subagent capability policy 与 ownership，统一 runtime 与 session 边界
+- 新增显式 subagent tape lineage，支持 linked tape 视图与跨 tape 召回
+- 拆分 Tape runtime 工具能力边界，提升隔离性
+- 拆分 agent runtime lifecycle owners，收紧 message、permission 与 stop 边界
+- 改进面板、MCP market 与消息操作等交互体验
+- 稳定聊天滚动归属并强化 session view ownership
+- 修复 Agent Memory provider cancellation 与 config ABA fence 绕过问题
+- 升级 markstream-vue 与 stream-monaco，对齐流式渲染依赖
+
+## v1.1.0-beta.1 (2026-07-14)
+- Added Grok OAuth device login and DaoXE provider support
+- Reworked the agent runtime and session boundaries to improve isolation and lifecycle handling
+- Improved Agent Memory vector storage, embedding reindex recovery, and bounded workload reliability
+- Improved streaming rendering and preserved the active sidebar workspace while navigating chat history
+- Fixed ACP direct-runtime refresh and manual health checks
+- 新增 Grok OAuth 设备登录和 DaoXE Provider 支持
+- 重构 Agent runtime 与 session 边界，提升隔离性和生命周期处理能力
+- 改进 Agent Memory 向量存储、embedding reindex 恢复与有界工作负载的可靠性
+- 优化流式渲染，并在浏览聊天历史时保留侧边栏当前工作区
+- 修复 ACP direct runtime 刷新和手动健康检查问题
+
+## v1.0.9 (2026-07-10)
+- Fixed Agent Memory correctness edge cases and strengthened record-level privacy controls
+- Fixed chat scroll position jumping to the bottom during streaming output
+- Fixed chat history restoration race conditions that could cause message loss
+- 修复 Agent Memory 正确性边界问题，并强化记录级隐私控制
+- 修复流式输出时聊天滚动位置跳到底部的问题
+- 修复聊天历史恢复竞态条件可能导致消息丢失的问题
+
+## v1.0.8 (2026-07-10)
+- Added the main-window Plugins Hub, Feishu/Lark install authentication, and streaming card delivery for remote control
+- Added MCP OAuth authentication, agent-scoped plugin controls for skills, MCP servers, and tools, plus improved skill sync workflows
+- Expanded Agent Memory with task-aware recall, redesigned settings, health and lifecycle diagnostics, in-chat visibility, and reliability improvements
+- Reworked scheduled tasks into Cron Jobs with a dedicated scheduler runtime, delivery routing, settings UI, and agent tool support
+- Added TokenLab, OpenCode Go, and GPT-5.6/Codex 5.6 support with configurable effort levels
+- Upgraded the provider and runtime stack to AI SDK v7, Zod v4, Electron 40.10.5, and DuckDB 1.5.4, while improving startup, chat rendering, scrolling, and responsive interaction performance
+- Fixed New API response handling, endpoint debug selection, memory first-turn stalls, context-overflow auto-handoff, ACP permission requests, assistant loading state, attachment replay, draft cleanup, and macOS window restoration and hide behavior
+- 新增主窗口插件中心、飞书/Lark 安装认证，以及远程控制流式卡片推送
+- 新增 MCP OAuth 认证、Agent 级 skills、MCP servers 与 tools 控制，并改进 skill sync 工作流
+- 扩展 Agent Memory，支持任务感知召回、重做设置页、健康与生命周期诊断、聊天内可见性，并提升可靠性
+- 将 scheduled tasks 重构为 Cron Jobs，支持独立 scheduler runtime、delivery routing、设置 UI 和 Agent tool
+- 新增 TokenLab、OpenCode Go 和 GPT-5.6/Codex 5.6 支持，并提供可配置的 effort levels
+- 将 provider 与 runtime 栈升级至 AI SDK v7、Zod v4、Electron 40.10.5 和 DuckDB 1.5.4，同时提升启动、聊天渲染、滚动与响应式交互性能
+- 修复 New API 响应处理、endpoint debug 选择、memory 首轮卡顿、context overflow 自动 handoff、ACP 权限请求、Assistant loading state、附件内容回放、草稿清理，以及 macOS 窗口恢复与隐藏行为
+
+## v1.0.8-beta.4 (2026-07-09)
+- Added TokenLab and OpenCode Go provider support
+- Redesigned Agent Memory settings with inline configuration, inbox, diagnostics, persona, and list views
+- Improved Agent Memory reliability for retrieval, pruning, write coordination, vector storage, and audit handling
+- Optimized chat markdown rendering to reduce send-time jitter and improve message layout stability
+- Updated Computer Use driver/runtime metadata and renamed the bundled CUA skill to `computer-use`
+- 新增 TokenLab 和 OpenCode Go provider 支持
+- 重做 Agent Memory 设置页，加入 inline configuration、inbox、diagnostics、persona 和 list views
+- 改进 Agent Memory retrieval、pruning、write coordination、vector storage 与 audit handling 的可靠性
+- 优化聊天 Markdown 渲染，减少发送时抖动并提升消息布局稳定性
+- 更新 Computer Use driver/runtime 元数据，并将内置 CUA skill 重命名为 `computer-use`
+
+## v1.0.8-beta.3 (2026-07-06)
+- Added MCP OAuth authentication, assistant approval review mode, delete confirmations, and in-chat Agent Memory visibility
+- Reworked scheduled tasks into Cron Jobs with scheduler runtime, delivery routing, settings UI, and agent tool support
+- Improved Agent Memory lifecycle management, skill sync UX, startup performance, and packaged Linux OpenDAL native libraries
+- Fixed ACP permission requests, assistant loading state, attachment replay behavior, MCP session tools, skill adoption, and multiple chat/settings regressions
+- 新增 MCP OAuth 认证、Assistant approval review mode、删除确认，以及聊天内 Agent Memory 可见性
+- 将 scheduled tasks 重构为 Cron Jobs，支持 scheduler runtime、delivery routing、设置页 UI 和 Agent tool
+- 改进 Agent Memory 生命周期管理、skill sync 体验、启动性能，并补齐 Linux OpenDAL native libraries 打包
+- 修复 ACP permission requests、Assistant loading state、附件内容重复回放、MCP session tools、skill adopt 和多项聊天/设置回归问题
+
+## v1.0.8-beta.2 (2026-06-30)
+- Added agent-scoped plugin extension controls for skills, MCP servers, and tools
+- Added Agent Memory health snapshots and audit details in settings
+- Fixed settings window sizing, sidebar chat actions, manual memory category handling, skill conflict popup layout, and provider 302 domain
+- Migrated commit hooks to commitlint and refreshed electron-builder plus provider and ACP registry data
+- 新增 Agent 级插件扩展控制，可按 Agent 限制 skills、MCP servers 和 tools
+- 新增 Agent Memory health snapshot 与设置页审计详情
+- 修复设置窗口尺寸、侧边栏会话操作、手动添加 memory category、技能冲突弹窗布局和 provider 302 domain
+- 迁移 commit hooks 到 commitlint，并刷新 electron-builder、Provider 与 ACP registry 数据
+
+## v1.0.8-beta.1 (2026-06-29)
+- Added the main-window Plugins Hub plus Feishu/Lark install authentication and streaming card delivery for remote control
+- Upgraded the provider/runtime stack with AI SDK v7, Zod v4 schemas, Electron 40.10.5, DuckDB 1.5.4, and refreshed toolchains
+- Fixed New API responses handling and endpoint debug selection, memory first-turn stalls, context-overflow auto-handoff, message-scoped skill activation, and request preview editor layout
+- 新增主窗口插件中心，并支持飞书/Lark 安装认证与远程控制流式卡片推送
+- 升级 provider/runtime 栈到 AI SDK v7、Zod v4 schema、Electron 40.10.5、DuckDB 1.5.4，并刷新工具链
+- 修复 New API responses 处理与 endpoint debug 选择、memory 首轮卡顿、context overflow 自动 handoff、按消息激活 skill，以及请求预览编辑器布局
+
+## v1.0.7 (2026-06-25)
+- Added the default chat workspace, task-aware Agent Memory, and persistent agent plan blocks in chat history
+- Improved Computer Use helper runtime isolation, packaging, shutdown cleanup, and refreshed bundled dependencies and resources
+- Fixed fresh SQLite schema bootstrap, stale Tape FTS search hits, New API responses endpoint configuration, sidebar history pagination, and locked skill reinstall handling
+- 新增默认聊天工作区、任务感知 Agent Memory，并支持在聊天历史中持久化 Agent plan blocks
+- 优化 Computer Use helper runtime 的隔离、打包和退出清理，并刷新内置依赖与资源
+- 修复首次 SQLite schema 初始化、陈旧 Tape FTS 搜索命中、New API responses endpoint 配置、侧边栏历史分页和技能重装锁定目录处理
+
+## v1.0.7-beta.2 (2026-06-25)
+- Fixed fresh SQLite schema bootstrap so new installations initialize reliably
+- Fixed New API responses endpoint configuration so it stays separate from other endpoint options
+- 修复首次 SQLite schema 初始化，提升新安装启动可靠性
+- 修复 New API responses endpoint 配置，避免与其他 endpoint 选项混用
+
+## v1.0.7-beta.1 (2026-06-24)
+- Added the default chat workspace so new chats start with prepared workspace context
+- Added task-aware Agent Memory with improved maintenance scheduling and management controls
+- Improved Computer Use helper runtime isolation, packaging, and shutdown cleanup
+- Fixed sidebar history pagination, locked skill reinstall handling, and refreshed Markstream Vue
+- 新增默认聊天工作区，让新聊天具备预设工作区上下文
+- 新增任务感知 Agent Memory，并改进维护调度与管理控制
+- 优化 Computer Use helper runtime 的隔离、打包和退出清理
+- 修复侧边栏历史分页、技能重装锁定目录处理，并刷新 Markstream Vue
+
+## v1.0.6 (2026-06-22)
+- Added S3-compatible cloud backup sync, OpenDAL-based backup storage, and workspace environment management
+- Added Agent Memory, Tape view manifests, replay lineage details, and focused workspace file inspection
+- Added OpenAI Codex runtime support, built-in API key providers, AWS Bedrock profile authentication, MiniMax M3 handling, and drag-and-drop skill installation
+- Added cross-platform Computer Use runtime packaging and improved agent runtime discovery, watcher reliability, and provider/ACP registry freshness
+- Fixed packaged cloud sync startup, Codex login behavior, memory followups, MCP server cleanup, steer abort queue handling, sidebar pagination, markdown scrollbar jitter, and settings save payloads
+- 新增 S3 兼容云备份同步、基于 OpenDAL 的备份存储，以及工作区环境管理
+- 新增 Agent Memory、Tape view manifests、replay lineage 详情，以及聚焦式工作区文件检查
+- 新增 OpenAI Codex runtime、内置 API key providers、AWS Bedrock profile 认证、MiniMax M3 处理和技能拖放安装
+- 新增跨平台 Computer Use runtime 打包，并改进 Agent runtime 发现、工作区监听可靠性和 Provider/ACP registry 更新
+- 修复打包版云同步启动、Codex 登录行为、memory followups、MCP server 清理、steer abort queue 处理、侧边栏分页、Markdown 滚动条抖动和设置保存 payload 问题
+
+## v1.0.6-beta.8 (2026-06-20)
+- Added OpenAI Codex runtime support with OAuth authentication and provider-specific request handling
+- Added built-in API key providers and provider registry metadata for easier model setup
+- Added environment management for workspace sessions and improved directory state persistence
+- Fixed steer abort queue handling so pending chat input pauses and resumes more reliably
+- Updated Markstream Vue and refreshed bundled provider/model and ACP registry data
+- 新增 OpenAI Codex runtime 支持，包含 OAuth 认证与 Provider 专属请求处理
+- 新增内置 API key providers 和 Provider registry metadata，简化模型配置
+- 新增工作区会话的环境管理，并改进目录状态持久化
+- 修复 steer abort queue 处理，让待处理聊天输入的暂停和恢复更可靠
+- 更新 Markstream Vue，并刷新内置 Provider/模型与 ACP registry 数据
+
+## v1.0.6-beta.7 (2026-06-17)
+- Added Tape manifest integrity and lineage details so replay traces can be audited more reliably
+- Added a workspace single item viewer for focused file inspection from the workspace panel
+- Added cross-platform CUA runtime packaging and plugin runtime build improvements
+- Fixed deterministic Tape view hashing and trace sequence handling
+- 新增 Tape manifest 完整性与 lineage 详情，让 replay trace 审计更可靠
+- 新增工作区单项查看器，方便从工作区面板聚焦检查文件
+- 支持了 Windows 和 Linux 平台的 Computer Use 能力
+- 修复 Tape view hash 与 trace sequence 的确定性处理
+
+## v1.0.6-beta.6 (2026-06-16)
+- Added Agent Memory so agents can extract, manage, and reuse persistent memory in agent workflows
+- Added DeepChat Tape view manifests and richer trace inspection for replay and context provenance
+- Added drag-and-drop skill installation, MiniMax M3 handling, and refreshed provider/model and ACP registry data
+- Improved workspace watching with a Parcel watcher utility host for large workspace reliability
+- Fixed markdown code block scrollbar jitter, sidebar history pagination stalls, and cloned settings save payloads
+- 新增 Agent Memory，让 Agent 工作流可以提取、管理并复用持久记忆
+- 新增 DeepChat Tape view manifest 与更完整的 trace 检查，支持 replay 和上下文来源追踪
+- 新增技能拖放安装、MiniMax M3 处理，并刷新 Provider/模型与 ACP registry 数据
+- 使用 Parcel watcher utility host 改进工作区监听，提升大型工作区可靠性
+- 修复 Markdown 代码块滚动条抖动、侧边栏历史分页卡住，以及设置保存 payload clone 问题
+
+## v1.0.6-beta.5 (2026-06-11)
+- Fixed packaged app startup by bundling the OpenDAL native binding needed by cloud sync
+- 修复打包应用启动问题，补齐云同步所需的 OpenDAL native binding
+
+## v1.0.6-beta.4 (2026-06-11)
+- Migrated cloud sync to OpenDAL and improved R2 setup for more reliable S3-compatible backups
+- Fixed agent runtime FFF loading from unpacked app builds and cleaned up logging, skill IO, and status bar behavior
+- 将云同步迁移到 OpenDAL，并优化 R2 设置，让 S3 兼容备份更可靠
+- 修复 Agent 运行时在 unpacked app 构建中的 FFF 加载，并清理日志、skill IO 与状态栏行为
+
+## v1.0.6-beta.3 (2026-06-10)
+- Added AWS Bedrock profile authentication support for easier account and credential switching
+- Improved agent runtime node discovery with FFF search and refreshed AI SDK packages plus bundled resources
+- Fixed Anthropic reasoning controls so supported thinking settings stay available after provider data refreshes
+- Fixed AWS provider styling consistency in the provider configuration UI
+- 新增 AWS Bedrock profile 认证支持，方便切换账号与凭据
+- 改进 Agent 运行时节点发现，使用 FFF 搜索，并刷新 AI SDK 依赖与内置资源
+- 修复 Anthropic 推理控制，让支持的 thinking 设置在 Provider 数据刷新后仍保持可用
+- 修复 AWS Provider 配置界面的样式一致性
+
+## v1.0.6-beta.2 (2026-06-08)
+- Fixed release CI tooltip module resolution so macOS release builds can complete reliably
+- 修复发布 CI 中 tooltip 模块解析问题，让 macOS 发布构建可稳定完成
+
+## v1.0.6-beta.1 (2026-06-08)
+- Added S3-compatible cloud backup sync for more flexible cross-device data backup
+- Improved Dify knowledge import compatibility with the latest `retrieval_model` schema
+- Refreshed bundled provider and ACP registry data for current model and agent availability
+- 新增 S3 兼容云备份同步，让跨设备数据备份更灵活
+- 优化 Dify 知识库导入兼容性，适配最新 `retrieval_model` schema
+- 刷新内置 Provider 与 ACP registry 数据，更新模型和 Agent 可用性
+
+## v1.0.5 (2026-06-05)
+- Added scheduled tasks, agent progress todos, session transfer, session tape memory, and remote `/agent` commands for more persistent agent workflows
+- Added OpenAI-compatible video generation, tool result image previews, remote image delivery, and richer TTS model routing controls
+- Added provider configuration import for CC Switch and external tools, plus refreshed bundled provider data to 142 providers and 6,964 models
+- Added encrypted SQLite database storage and a safer settings Danger Zone reset flow
+- Added the workspace file tree sidebar, richer Git diff rendering, sidebar theme and chat shortcut controls, and a cleaner new-thread input transition
+- Improved chat readability and performance with automatic activity collapsing, merged activity groups, content-visibility message windowing, and smoother streaming
+- Improved ACP v1 and remote-control reliability with stronger session handling, diagnostics, alias resolution, media delivery, and working-directory errors
+- Fixed macOS foreground identity, provider capability handling, browser recovery errors, startup warning noise, floating button persistence, and session list behavior
+- 新增定时任务、Agent 进度 todo、会话转移、Session Tape Memory 和远程 `/agent` 命令，让 Agent 工作流更持久可控
+- 新增 OpenAI 兼容视频生成、工具结果图片预览、远程图片投递和更完整的 TTS 模型路由控制
+- 新增 CC Switch 与外部工具的 Provider 配置导入，并刷新内置 Provider 数据至 142 个 Provider、6,964 个模型
+- 新增 SQLite 数据库加密存储，并让设置里的 Danger Zone 重置流程更安全
+- 新增工作区文件树侧栏、更丰富的 Git diff 渲染、侧栏主题与聊天快捷键控制，以及更清爽的新会话输入框过渡
+- 通过活动自动折叠、活动组合并、content-visibility 消息窗口和更平滑的流式渲染，提升聊天可读性与性能
+- 提升 ACP v1 与远程控制可靠性，强化会话处理、诊断、别名解析、媒体投递和工作目录错误处理
+- 修复 macOS 前台身份、Provider 能力处理、浏览器恢复错误、启动告警噪声、浮动按钮位置持久化和会话列表行为
+
+## v1.0.5-beta.8 (2026-06-02)
+- Added a collapsible workspace file tree sidebar and an animated theme toggle in the app sidebar
+- Added automatic chat activity collapsing so completed reasoning and tool-call work stays easier to scan
+- Improved ACP v1 reliability with stronger capability handling, session persistence, terminal behavior, diagnostics, and protocol coverage
+- Fixed model capability handling for temperature controls and provider database budget sentinels
+- 新增可折叠的工作区文件树侧栏和应用侧栏动态主题切换按钮
+- 新增聊天活动自动折叠，让完成后的思考和工具调用内容更易扫读
+- 提升 ACP v1 可靠性，完善能力处理、会话持久化、终端行为、诊断和协议覆盖
+- 修复温度控制和 Provider 数据库预算特殊值的模型能力处理
+
+## v1.0.5-beta.7 (2026-06-01)
+- Added agent session transfer so chats can be preserved or moved when changing agent ownership
+- Added a richer workspace Git diff panel rendering experience
+- Improved NewAPI routing, AI SDK system prompt handling, image-capable model switching, and plan model styling
+- Fixed workspace file reference insertion, floating button position persistence, and collapsed sidebar agent expansion
+- 新增 Agent 会话转移能力，让切换 Agent 归属时可以保留或移动聊天
+- 新增更完整的工作区 Git diff 面板渲染体验
+- 优化 NewAPI 路由、AI SDK system prompt 处理、图片能力模型切回聊天和计划模型样式
+- 修复工作区文件引用插入、浮动按钮位置持久化和折叠侧边栏 Agent 展开问题
+
+## v1.0.5-beta.6 (2026-05-29)
+- Added `/agent` commands across remote-control channels so remote conversations can switch agents more easily
+- Added tool result image previews and remote image delivery for richer agent output
+- Added skill draft confirmation cards with view, install, and discard actions, plus Top P generation controls
+- Improved ACP agent alias resolution and remote workdir error handling
+- Fixed agent exec utility host startup failures, prerelease upgrade channel handling, startup warning noise, and inline stream auto-follow jitter
+- 新增远程控制渠道的 `/agent` 命令，让远程会话更方便地切换 Agent
+- 新增工具结果图片预览与远程图片投递，完善 Agent 输出展示
+- 新增带查看、安装、丢弃操作的 Skill 草稿确认卡，并加入 Top P 生成设置
+- 优化 ACP Agent 别名解析和远程工作目录错误处理
+- 修复 Agent exec utility host 启动失败、预发布渠道升级、防降级、启动告警噪声和流式输出底部抖动问题
+
+## v1.0.5-beta.5 (2026-05-27)
+- Added scheduled tasks for recurring agent work
+- Added high-priority language support and completed missing locale keys for broader localization coverage
+- Simplified the data settings Danger Zone entry so reset choices stay inside the confirmation dialog
+- Fixed MiMo Pro TTS routing so it uses chat-compatible provider behavior
+- Preserved paired Feishu users across remote-control state updates
+- 新增定时任务能力，支持周期性的 Agent 工作
+- 新增高优先级语言支持，并补齐缺失的本地化 keys，扩大多语言覆盖
+- 简化数据设置中的 Danger Zone 入口，将具体重置选项收进确认弹窗
+- 修复 MiMo Pro 的 TTS 路由，使其使用兼容聊天的 Provider 行为
+- 修复飞书远程控制状态更新时配对用户被丢失的问题
+
+## v1.0.5-beta.4 (2026-05-25)
+- Added session tape memory to persist and compress agent conversation history more reliably
+- Synced CUA driver to v0.2.0 with diagnostic tools and improved app launching
+- Telegram replies now render Markdown as HTML for proper formatting
+- Improved agent steer execution responsiveness
+- Updated AI SDK packages and refreshed bundled provider registry data
+- 新增 Session Tape Memory，更可靠地持久化和压缩 Agent 会话历史
+- 同步 CUA driver 至 v0.2.0，新增诊断工具并改进应用启动能力
+- Telegram 回复现在将 Markdown 渲染为 HTML，格式展示更准确
+- 提升 Agent steer 执行的响应性
+- 更新 AI SDK 依赖并刷新内置 Provider registry 数据
+
+## v1.0.5-beta.3 (2026-05-22)
+- Added encrypted SQLite database storage to strengthen local data protection
+- Improved onboarding guide handoff by refreshing state after setup transitions
+- Refined onboarding spotlight rendering with SVG paths and fixed panel stacking and hover performance issues
+- 新增 SQLite 数据库加密存储，增强本地数据保护
+- 优化引导流程交接，在设置切换后刷新状态
+- 优化引导高亮的 SVG path 渲染，并修复面板层级与 hover 性能问题
+
+## v1.0.5-beta.2 (2026-05-21)
+- Added provider configuration import with preview, validation, conflict handling, and localized settings UI
+- Added CC Switch configuration import and broader provider import path discovery for smoother migration from external tools
+- Added a hero transition for the chat input on new threads and refined chat overlay/sidebar styling for a cleaner first-run flow
+- Improved session list behavior with stable alphabetical ordering and more predictable pinning
+- Added Feishu thing reactions and tightened Feishu remote-control runtime handling
+- 新增 Provider 配置导入，支持预览、校验、冲突处理和本地化设置界面
+- 新增 CC Switch 配置导入，并扩展 Provider 导入路径发现，方便从外部工具迁移
+- 新增新会话聊天输入框的 hero 过渡，并优化聊天浮层与侧边栏样式，让首次使用流程更清爽
+- 优化会话列表行为，保持稳定的字母排序和更可预期的置顶表现
+- 新增飞书 thing 表情互动，并加强飞书远程控制运行时处理
+
+## v1.0.5-beta.1 (2026-05-19)
+- Added an agent progress todo tool with floating progress UI and plan message rendering so long-running agent work is easier to track
+- Added OpenAI-compatible video generation with model settings, generated video message rendering, and provider runtime support
+- Improved TTS routing and Gemini TTS behavior with unified model settings, provider metadata, and stronger runtime coverage
+- Improved Feishu plugin packaging with platform bundles, release workflow support, and updated packaging documentation
+- Updated TypeScript native preview, vue-tsgo, provider registry, and ACP registry data for current tooling and runtime compatibility
+- Fixed image-route chat budget handling so generated image requests avoid unnecessary context budget failures
+- 新增 Agent 进度 todo 工具、浮动进度界面和计划消息渲染，让长时间 Agent 工作更容易跟踪
+- 新增 OpenAI 兼容的视频生成能力，包含模型设置、生成视频消息渲染和 Provider 运行时支持
+- 优化 TTS 路由和 Gemini TTS 表现，补齐统一模型设置、Provider 元数据和更强的运行时覆盖
+- 优化飞书插件打包，支持平台 bundle、发布 workflow，并更新插件打包文档
+- 更新 TypeScript native preview、vue-tsgo、Provider registry 和 ACP registry 数据，提升当前工具链与运行时兼容性
+- 修复图片路线的聊天预算处理，让生成图片请求避免不必要的上下文预算失败
+
+## v1.0.4 (2026-05-15)
+- Added guided onboarding, voice input transcription, and a redesigned settings control center to make first setup and daily configuration easier
+- Added agent image generation, OpenAI image settings, Mac computer use, manual compaction, and side panel fullscreen controls for more capable agent workflows
+- Added Mistral, Xiaomi Token Plan regions, refreshed provider data, and improved model capability controls for broader model access
+- Improved remote control across Feishu, Weixin, Discord, QQ Bot, Telegram, and WeChat iLink with richer media delivery and steadier streamed replies
+- Improved ACP and agent runtime reliability with safer working-directory handling, context budgeting, session routing, tool output limits, and persisted turn metadata
+- Improved chat and workspace responsiveness with smoother Markdown streaming, older-message pagination, YoBrowser activity feedback, and more native desktop interactions
+- Hardened plugin MCP isolation, SVG and external-link handling, provider verification, config import compatibility, and SQLite upgrade recovery
+- Updated bundled runtimes, AI SDK patch versions, Markstream rendering, provider registry data, and release packaging support for stable builds
+- 新增引导式上手、语音输入转写和重新设计的设置控制中心，让首次配置与日常设置更顺手
+- 新增 Agent 图片生成、OpenAI 图片设置、Mac 电脑使用、手动压缩和侧边栏全屏控制，提升 Agent 工作流能力
+- 新增 Mistral、小米 Token Plan 多区域支持，刷新 Provider 数据，并优化模型能力控制，扩展模型接入范围
+- 优化飞书、微信、Discord、QQ Bot、Telegram 与 WeChat iLink 远程控制，支持更丰富的媒体投递和更稳定的流式回复
+- 优化 ACP 与 Agent 运行时可靠性，包括工作目录保护、上下文预算、会话路由、工具输出限制和 turn 元数据持久化
+- 优化聊天与工作区响应表现，改进 Markdown 流式渲染、历史消息分页、YoBrowser 活动反馈和更原生的桌面交互
+- 加强 Plugin MCP 隔离、SVG 与外部链接处理、Provider 验证、配置导入兼容性和 SQLite 升级恢复
+- 更新内置运行时、AI SDK patch 版本、Markstream 渲染、Provider registry 数据与发布打包支持，面向稳定构建
+
+## v1.0.4-beta.8 (2026-05-12)
+- Added a redesigned settings control center with overview cards, grouped navigation, settings activity, and refined MCP, provider, and data panels
+- Added a fullscreen toggle for the side panel and improved layout responsiveness across side panel and workspace views
+- Added an isolated Feishu plugin settings surface with credential management, MCP presets, and plugin-owned MCP servers hidden from global MCP settings
+- ACP client runtime now has clearer connection and session routing, debug logging, path guarding, and persisted turn metadata for steadier ACP sessions
+- Weixin remote control now delivers generated images and avoids leaving silent pending interactions behind
+- Feishu remote replies now send post payloads with the expected message shape
+- Agent failed-message context is preserved more consistently after compaction and context-pressure errors
+- Updated AI SDK patch versions and refreshed bundled provider and ACP registry data for fresher runtime compatibility
+- 设置页升级为控制中心，新增概览卡片、分组导航、设置活动记录，并优化 MCP、Provider 与数据设置面板
+- 新增侧边栏全屏切换，并优化侧边栏与工作区视图的布局响应表现
+- 新增隔离的飞书插件设置页，支持凭证管理、MCP 预设，并从全局 MCP 设置中隐藏插件自有 MCP server
+- ACP client runtime 现在具备更清晰的连接与会话路由、调试日志、路径保护和 turn 元数据持久化，让 ACP 会话更稳定
+- 微信远程控制现在可以发送生成图片，并避免留下静默的 pending 交互
+- 飞书远程回复现在会按预期消息结构发送 post payload
+- Agent 在上下文压缩和上下文压力错误后，会更稳定地保留失败消息上下文
+- 更新 AI SDK patch 版本，并刷新内置 Provider 与 ACP registry 数据，提升运行时兼容性新鲜度
+
+## v1.0.4-beta.7 (2026-05-11)
+- Added Mistral as a built-in provider, including model icons, provider catalog support, and deeplink handling
+- Agent runs now budget tool schemas and tool output more defensively, reducing oversized context failures and follow-up stalls
+- Context-window overflow errors now include budget diagnostics and try pressure recovery before failing oversized requests
+- Feishu remote control replies now use optimized Markdown posts for headings, tables, lists, code blocks, and streamed updates
+- Markdown streaming now stays smooth while messages are loading without leaving completed content in a streaming state
+- Upgraded markstream-vue to 0.0.14-beta.8 for improved Markdown rendering behavior
+- Agent terminal execution is steadier when shells, working directories, or context compaction need fallback handling
+- Disabled providers no longer trigger verification requests from settings screens
+- Plugin MCP servers now keep their lifecycle more isolated, improving start/stop behavior and built-in plugin visibility
+- 新增 Mistral 内置 Provider，补齐模型图标、Provider 目录与 deeplink 支持
+- Agent 运行会更谨慎地预算工具 schema 与工具输出，减少上下文过大和后续执行卡住的问题
+- 上下文窗口溢出错误现在会带上预算诊断，并在失败前尝试恢复上下文压力
+- 飞书远程控制回复改用优化后的 Markdown post，改善标题、表格、列表、代码块和流式更新
+- Markdown 流式渲染只在消息加载中保持平滑，完成后的内容不会继续停留在流式状态
+- markstream-vue 升级到 0.0.14-beta.8，改善 Markdown 渲染表现
+- 当 shell、工作目录或上下文压缩需要 fallback 时，Agent 终端执行更稳定
+- 设置页不会再对已禁用的 Provider 发起验证请求
+- Plugin MCP server 的生命周期隔离更清晰，启动、停止和内置插件展示更可靠
+
+## v1.0.4-beta.6 (2026-05-09)
+- Agents can now generate images right inside chat, with OpenAI image settings available when you want more control
+- Image previews and image actions feel smoother, especially around generated results and tool output
+- Long conversations should feel lighter when you scroll back through older messages
+- Sync and import are more forgiving when settings come from a different app version
+- Mac computer use got a couple of driver updates, so window handling, clicking, and app control should be steadier
+- Fixed a handful of everyday annoyances around Ollama, provider search, Windows command output, search docs, and empty computer-use settings messages
+- Agent 现在可以直接在聊天里生成图片；需要细调时，也能设置 OpenAI 图片生成选项
+- 图片预览和图片操作更顺了一些，生成结果和工具输出里的图片都更好处理
+- 长对话回看历史时会轻快一点，旧消息加载不再那么吃劲
+- 设置同步和导入更宽容了，从不同版本带来的备份也更稳
+- Mac 电脑使用能力升级了几轮驱动，窗口处理、点击和控制应用会更稳
+- 修了一批日常小毛病，包括 Ollama、模型服务商搜索、Windows 命令输出、搜索文档和电脑使用设置里的空提示
+
+## v1.0.4-beta.5 (2026-05-04)
+- Added Mac computer use capability for enhanced desktop automation
+- Added launch at login and access controls for better app startup management
+- Enhanced agent capabilities with improved model source derivation
+- Upgraded markstream-vue for better stream rendering performance
+- Fixed disabled provider models still appearing in model selection
+- Fixed DeepSeek empty reasoning content handling
+- Fixed file join failures in chat flows
+- 新增 Mac 电脑使用功能，增强桌面自动化能力
+- 新增开机启动与访问控制，优化应用启动管理
+- 增强 Agent 功能，优化模型源选择逻辑
+- 升级 markstream-vue，提升流式渲染性能
+- 修复已禁用供应商模型仍在模型选择中显示的问题
+- 修复 DeepSeek 空推理内容处理
+- 修复聊天流程中的文件连接失败问题
+
+## v1.0.4-beta.4 (2026-04-29)
+- Added model fetching fallbacks for Anthropic and Gemini so provider model lists recover more reliably
+- Added Xiaomi Token Plan providers for CN, SGP, and AMS regions
+- Enhanced DeepSeek V4 compatibility across provider and model workflows
+- Improved active chat input routing and tool-call image previews for clearer chat workflows
+- Fixed agent and ACP workspace propagation, interleaved tool streams, and context budgeting for tool schemas
+- 新增 Anthropic 与 Gemini 模型拉取 fallback，提升 Provider 模型列表恢复稳定性
+- 新增小米 Token Plan 的 CN、SGP 与 AMS 区域 Provider
+- 增强 DeepSeek V4 在 Provider 与模型流程中的兼容性
+- 优化当前聊天输入路由与工具调用图片预览，让聊天流程更清晰
+- 修复 Agent 与 ACP 工作区传递、交错工具流以及工具 schema 上下文预算处理
+
+## v1.0.4-beta.3 (2026-04-27)
+- Fixed attachment date metadata transfer across IPC payloads so attachment records stay valid in chat flows
+- 修复附件日期元数据在 IPC 载荷中的传递，确保聊天流程中的附件记录保持有效
+
+## v1.0.4-beta.2 (2026-04-27)
+- Preserved interleaved reasoning output so mixed reasoning and answer streams stay in the correct order
+- Updated the Markstream renderer to the stable 0.0.13 release for more reliable Markdown streaming
+- Improved chat message transitions, sidebar updates, and side panel rendering performance
+- Fixed RTK and built-in knowledge configuration status handling across MCP tool setup flows
+- 保留交错 reasoning 输出顺序，确保 reasoning 与正文混合流式内容按预期展示
+- 将 Markstream 渲染器更新到稳定版 0.0.13，提升 Markdown 流式渲染可靠性
+- 优化聊天消息动效、侧边栏更新与侧边面板渲染性能
+- 修复 RTK 与内置知识库配置状态处理，完善 MCP 工具配置流程
+
+## v1.0.4-beta.1 (2026-04-25)
+- Improved remote control media delivery across Discord, Feishu, QQ Bot, Telegram, and WeChat iLink, including block streaming and file handling
+- Fixed ACP working directory propagation for remote executions so agent commands run in the intended workspace
+- Added batch model status updates to reduce provider model list churn and keep model management more responsive
+- Hardened renderer model capability detection, external URL opening, and SVG sanitization against stale state and unsafe links
+- Fixed RTK runtime startup when the expected hook is missing, improving agent runtime resilience on affected installs
+- 优化 Discord、飞书、QQ Bot、Telegram 与微信 iLink 的远程控制媒体投递，完善块流式输出与文件处理
+- 修复远程执行中的 ACP 工作目录传递，确保 agent 命令在预期工作区运行
+- 新增模型状态批量更新，减少 Provider 模型列表抖动并提升模型管理响应速度
+- 加强渲染端模型能力检测、外部链接打开与 SVG 清理，避免过期状态和不安全链接
+- 修复缺少预期 hook 时 RTK runtime 启动失败的问题，提升受影响安装环境下的 agent runtime 韧性
+
+## v1.0.3 (2026-04-24)
+- Added DeepSeek V4 series model support and refreshed provider model data for more complete default model availability
+- Migrated model requests to the AI SDK runtime for more consistent provider behavior, streaming, prompt cache, and tool calling
+- Expanded remote control into a unified multi-channel setup with Discord, QQ Bot, and WeChat iLink support
+- Added project workspace directories, privacy mode, inline chat session renaming, long user message collapse, and improved new chat entry behavior
+- Added NewAPI and Astraflow (ModelVerse) provider support, richer model capability controls, request timeout settings, and more reliable model list management
+- Improved desktop security, startup responsiveness, embedded browser resizing, image paste submission, Gemini compatibility, and SQLite upgrade recovery
+- Added Sharp native package hoisting to keep image processing dependencies available in release builds
+- 新增 DeepSeek V4 系列模型支持，并刷新 Provider 模型数据，提升默认模型可用性覆盖
+- 将模型请求迁移到 AI SDK 运行时，提升 Provider 行为、流式输出、Prompt Cache 与工具调用一致性
+- 远程控制升级为统一多渠道配置，新增 Discord、QQ Bot 与微信 iLink 支持
+- 新增项目工作区目录、隐私模式、会话内联重命名、长用户消息折叠，并优化新建会话入口体验
+- 新增 NewAPI 与 Astraflow（ModelVerse）Provider，补充模型能力控制、请求超时配置与更稳定的模型列表管理
+- 提升桌面端安全性、启动响应、内嵌浏览器尺寸调整、图片粘贴提交、Gemini 兼容性与 SQLite 升级恢复稳定性
+- 增加 Sharp 原生包 hoist 配置，确保图片处理依赖在 release 构建中可用
+
+## v1.0.3-beta.6 (2026-04-22)
+- Added model initialization in settings so ModelSelect respects the current chat mode and restores default model controls more reliably
+- Added ACP registry icon request handling in the floating widget to improve agent icon rendering and related session visuals
+- Simplified YoBrowser host readiness handling to keep the embedded browser lifecycle more predictable
+- 新增设置页模型初始化流程，使 ModelSelect 更准确地遵循当前聊天模式，并提升默认模型配置恢复稳定性
+- 新增悬浮组件中的 ACP registry 图标请求处理，优化 Agent 图标渲染与相关会话视觉表现
+- 精简 YoBrowser host readiness 处理逻辑，提升内嵌浏览器生命周期的可预测性
+
+## v1.0.3-beta.5 (2026-04-22)
+- Added privacy mode and inline chat session renaming to improve workspace discretion and session organization
+- Added request timeout controls with a higher default range, and refined Kimi fixed-temperature plus Gemini v1beta compatibility handling
+- Improved startup and runtime responsiveness through asynchronous icon loading, store initialization cleanup, and more stable navigation payload normalization
+- Hardened desktop security by enabling Electron context isolation and disabling node integration for embedded web contents
+- Fixed several workflow regressions across trackpad scrolling, new thread entry visibility, project clearing, timeout propagation, and upgraded SQLite/provider recovery
+- 新增隐私模式与会话内联重命名，提升工作区信息保护和会话整理效率
+- 新增请求超时配置并扩展默认范围，同时优化 Kimi 固定温度策略与 Gemini v1beta 兼容处理
+- 通过异步图标加载、store 初始化清理与导航载荷规范化，改善启动速度和运行时响应性
+- 强化桌面端安全基线，为内嵌 Web 内容启用 Electron context isolation 并关闭 node integration
+- 修复触控板滚动、新建会话入口显隐、项目清空选择、超时参数传递，以及升级后 SQLite/provider 恢复等多项流程问题
+
+## v1.0.3-beta.4 (2026-04-19)
+- Recovered missing SQLite `deepchat_sessions` columns on upgraded installs to restore stable session persistence
+- 修复升级安装后 SQLite `deepchat_sessions` 缺失列的问题，恢复会话持久化稳定性
+
+## v1.0.3-beta.3 (2026-04-18)
+- Added Anthropic temperature support in model capability controls
+- Added `none` and `xhigh` reasoning effort options for supported models
+- Improved sidebar session pin feedback and stabilized session group identity handling
+- Refined app update installation by cleaning up floating windows before relaunch
+- Added Astraflow (ModelVerse) provider support and removed the deprecated Laoshi provider
+- Added project-based workspace directories with drag-and-drop setup support
+- Enhanced the floating agent widget to support all agents with more stable session handling
+- Improved Anthropic reasoning routing and capped derived max token defaults for safer model setup
+- 为模型能力配置补充 Anthropic temperature 支持
+- 为受支持模型新增 `none` 与 `xhigh` reasoning effort 选项
+- 优化侧栏会话 pin 反馈，并稳定会话分组标识处理
+- 在应用更新安装前清理悬浮窗口，提升升级流程稳定性
+- 新增 Astraflow（ModelVerse）Provider 支持，并移除已废弃的 Laoshi Provider
+- 新增基于项目目录的工作区管理能力，并支持拖拽接入工作区
+- 增强悬浮 Agent 按钮，支持全部 Agent 并提升会话管理稳定性
+- 优化 Anthropic reasoning 路由，并限制推导出的默认 max tokens，降低模型配置风险
+
+## v1.0.3-beta.2 (2026-04-15)
+- Expanded remote control into a unified multi-channel setup with Discord, QQ Bot, and WeChat iLink support
+- Added default collapsing for long user messages so dense chats stay readable while attachments remain fully visible
+- Polished the new conversation entry flow with a persistent collapsed-sidebar `+` action and a shorter default input box
+- Improved streaming responsiveness by reducing renderer reflow and translate popup overhead during live updates
+- Fixed ACP terminal permission approval bridging so streamed permission requests stay intact during execution
+- 远程控制升级为统一多渠道配置流程，新增 Discord、QQ Bot 与微信 iLink 支持
+- 为超长用户消息加入默认折叠，保留附件完整展示，提升长会话可读性
+- 打磨新建会话入口体验，在折叠侧栏下保留常驻 `+` 按钮，并缩短默认输入框高度
+- 降低流式更新期间的渲染回流与翻译弹窗开销，提升消息流动顺滑度
+- 修复 ACP 终端权限审批桥接流程，保证执行期间的流式权限请求信息完整传递
+
+## v1.0.3-beta.1 (2026-04-11)
+- Migrated model requests to the AI SDK runtime, improving prompt cache behavior, provider consistency, and streaming stability
+- Added NewAPI provider support and refined compatible endpoint configuration
+- Improved model management with more stable provider toggles and synchronized Ollama selectable model status
+- Added `skill_view` draft flow and automatic tool activation after skill previews to smooth skill setup
+- Enhanced Markdown and workspace link navigation, added sidebar panel toggle hotkeys, and fixed artifact viewer sizing in the side panel
+- 将模型请求迁移到 AI SDK 运行时，进一步改善 Prompt Cache 表现、Provider 一致性与流式稳定性
+- 新增 NewAPI Provider 支持，并完善兼容端点配置体验
+- 改进模型管理，修复 Provider 模型开关稳定性并同步 Ollama 可选模型状态
+- 新增 `skill_view` 草稿流，并在技能预览后自动激活工具，减少技能接入摩擦
+- 优化 Markdown 与工作区链接跳转体验，新增侧栏面板切换快捷键，并修复侧边栏制品预览高度问题
+
+## v1.0.2 (2026-04-08)
+- Added provider model list filtering and sorting, and now remembers the sidebar session grouping mode
+- Added ACP Agent uninstall support and refined provider prompt cache configuration
+- Improved remote delivery ordering for Telegram and Feishu, and fixed db-backed model list sync stability
+- Refined dashboard and settings responsiveness, and fixed auto compact settings persistence
+- 新增 Provider 模型列表筛选排序能力，并记住侧边栏会话分组方式
+- 新增 ACP Agent 卸载支持，并完善 Provider Prompt Cache 配置体验
+- 优化 Telegram 与 Feishu 远程消息投递顺序，修复数据库驱动模型列表同步稳定性
+- 改进仪表盘与设置页响应式布局，并修复自动压缩设置保存问题
+
+## v1.0.1 (2026-04-02)
+- Added in-chat search and Spotlight global search for faster access to messages and app entry points
+- Improved the provider database refresh flow and added manual model config refresh
+- Updated the Markdown renderer preprocessing flow to improve rendering stability
+- Fixed rate limit handling to reduce failures and degraded request experience
+- 新增会话内搜索与 Spotlight 全局搜索，方便快速定位历史消息与应用入口
+- 优化 Provider 数据库刷新流程，支持手动刷新模型配置
+- 更新 Markdown 渲染器预处理逻辑，提升消息渲染稳定性
+- 修复速率限制处理问题，减少请求受限时的异常体验
+
+## v1.0.0 (2026-03-31)
+- DeepChat 1.0 正式发布：完成全新 Agent 架构切换，统一 DeepChat Agent 与 ACP Agent 主流程，并内置 DimCode Agent
+- 新增远程控制能力矩阵：支持 Telegram、Feishu 与 ACP Agent Remote，补齐权限消息、流式块渲染与工作目录选择
+- 强化工作流与工具链：支持 RTK 工具调用、Environments、Provider Deeplink 导入、Workspace 拖拽引用与 DeepChat Sub Agent 协作
+- 持续打磨桌面端体验：新增浮动窗口、用户仪表盘、自动压缩控制，并优化侧边栏、悬浮按钮、状态栏与工具调用交互
+- 完成正式版稳定性收敛：修复 HTML 预览、主题同步、消息标题选择、会话工作目录、MCP 生命周期与历史序列化等问题
+
+## v1.0.0-beta.7 (2026-03-27)
+- 新增 Novita AI LLM 提供商接入
+- 新增 Provider 配置导入能力（Deeplink 导入）
+- 新增 Feishu Bot 远端接入能力
+- 改进悬浮窗与侧边栏交互体验：SessionItem 由右键菜单切换为 hover/浮层交互，浮动按钮 hover 与透明度细节优化
+- 修复消息标题选择与 MCP 生命周期相关稳定性问题，并清理已过期 MCP Server
+
+## v1.0.0-beta.6 (2026-03-24)
+- 新增 Telegram Remote Control，可通过 Telegram 远程查看与驱动会话，远程控制配置也已接入设置页
+- 统一 DeepChat Agent 与 ACP Agent 的 Agent 能力和入口，补齐欢迎页、本地化文案与默认配置，整体使用路径更一致
+- 优化会话默认工作目录传递，修复 Agent / ACP / Skills 在 session workdir 继承上的问题
+- 强化启动与工具输出稳定性，修复 Splash 窗口显示时机，并为大体量工具输出增加保护与批处理适配
+- 移除过时 MCP UI 支持，修复 OpenAI Responses 历史序列化问题，同时继续打磨状态同步与路由细节
+
+## v1.0.0-beta.5 (2026-03-22)
+- 优化启动 Splash 窗口与 ACP 配置加载提示，启动过程更直观
+- 支持 ACP Registry 搜索安装与 ACP 模型选择，ACP Agent 配置体验继续完善
+- 新增会话 steer / queue 能力，支持待发送消息排队、转向与恢复处理
+- 打磨工具调用卡片、状态栏控制与更新入口，整体交互更顺手
+- 修复 OpenAI Compatible MCP 工具、interleaved thinking，以及队列与 stop 状态同步等问题
+
+## v1.0.0-beta.4 (2026-03-18)
+- 新增浮动窗口，全新效果一目了然
+- 增加用户仪表盘，token使用一目了然
+- 重构内建工具链，支持 RTK 工具调用，控制和性能都有提升
+- 新增 Environments 设置，方便为不同场景管理独立运行配置
+- 修复全新安装时 SQLite 迁移冲突问题，提升首次启动稳定性
+
+## v1.0.0-beta.3 (2026-03-18, withdrawn)
+- 新增浮动窗口，全新效果一目了然
+- 增加用户仪表盘，token使用一目了然
+- 重构内建工具链，支持 RTK 工具调用，控制和性能都有提升
+- 统一 Workspace 生命周期刷新，清理旧代码，提升整体稳定性
+
+## v1.0.0-beta.2 (2026-03-13)
+- 新增自动压缩控制，可在设置中配置会话摘要压缩行为
+- 优化 Yo Browser 生命周期与迁移流程，提升稳定性
+- 强化 Skills 运行时执行安全，并补齐欢迎页自定义能力
+- 修复多项界面问题，包括 Agent 文案对齐、语音输入按钮显示与悬浮按钮细节
+
+## v1.0.0-beta.1 (2026-03-09)
+- 全新 Agent 架构：重构 Agent UI 与 Agent Loop，模块化流处理，统一代码路径
+- 移除 Chat 模式：简化模式选择，仅保留 Agent 和 ACP Agent 两种模式
+- 默认模型配置系统：新增默认模型与默认视觉模型全局设置
+- 内置 DimCode Agent：预置 ACP Agent，开箱即用的代码助手
+
+## v0.5.8 (2026-02-09)
+- OpenAI 默认改为 Responses API
+- 支持了 Telegram/Discord/Confirmo 通知
+- 支持任务生命周期 hooks
+- 修复少量 Bug
+
+## v0.5.7 (2026-02-05)
+- 完善 Skills 支持
+- Agent 现在可以生成可交互的提问信息
+- 增加 Voice.ai 为新供应商
+- 修复大量 Bug
+
+## v0.5.6-beta.5 (2025-01-16)
+- 全新 Skills 管理系统，支持技能安装、同步与多平台适配
+- 新增 o3.fan 提供商、优化工具调用（大型调用卸载、差异块展示、权限管理）、性能提升（消息列表虚拟滚动、流式事件批处理调度）
+- 修复多项问题：Ollama 错误处理、滚动定位、聊天输入高度、macOS 全屏等
+- All-new Skills management system with installation, sync, and multi-platform adapters
+- Added o3.fan provider, enhanced tool calls (offloading, diff blocks, permissions), performance boost (message list virtual scrolling, batched stream scheduling)
+- Fixed multiple issues: Ollama error handling, scroll positioning, chat input height, macOS fullscreen, etc.
+
+## v0.5.6-beta.4 (2025-12-30)
+- 全面重构 Agent 与会话架构：拆分 agent/session/loop/tool/persistence，替换 Thread Presenter 为 Session Presenter，强化消息压缩、工具调用、持久化与导出
+- 增强搜索体验：新增 Search Presenter 与搜索提示模板，完善搜索助手与搜索引擎配置流程
+- 加固权限与数据：新增命令权限缓存/服务，更新模型与提供商数据库，并补充多语言 i18n 文案
+- Agent and session architecture refactor (agent/session/loop/tool/persistence) with Session Presenter replacing Thread Presenter to improve compression, tool calls, persistence, and exports
+- Better search experience via new Search Presenter and prompt templates, refining the search assistant and engine setup
+- Hardened permissions and data updates with command permission cache/service, refreshed provider/model DB, and broader i18n coverage
+
+## v0.5.6-beta.3 (2025-12-27)
+- 全新 Agent Mode，支持 RipGrep 等数十项新特性
+- 全新子会话概念，随时针对会话中任意消息单独讨论
+- 修复一些已知问题
+- ACP Agent 可以直接使用软件里面配置的 MCP
+- All-new Agent Mode with dozens of new features, including RipGrep
+- New sub-session concept: discuss any message in a conversation at any time
+- Fixed some known issues
+- ACP Agent can directly use the MCP configured in the app
+
+## v0.5.6-beta.1 (2025-12-23)
+- Markdown 优化，修复列表元素异常
+- 修复 Ollama 视觉模型图片格式
+- Improved Markdown rendering, fixed list element issues
+- Fixed Ollama vision model image format
+
+## v0.5.5 (2025-12-19)
+- 全新 Yo Browser 功能，让你的模型畅游网络
+- All-new Yo Browser lets your model roam the web
+
+## v0.5.3 (2025-12-13)
+- 优化 ACP 体验,增加 ACP 调试能力
+- 增加了自定义软件字体能力
+- add acp process warmup and debug panel
+- add font settings
+- add Hebrew (he-IL) Translation

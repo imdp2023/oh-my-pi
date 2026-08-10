@@ -1,0 +1,579 @@
+{
+  "input": {
+    "placeholder": "DeepChat に何でも聞いてください。{'@'} でファイルをメンション、/ でコマンドを使用できます",
+    "fileArea": "ファイルエリア",
+    "inputArea": "入力エリア",
+    "functionSwitch": "機能スイッチ",
+    "fileSelect": "ファイルを選択",
+    "pasteFiles": "クリップボードから貼り付けに対応",
+    "dropFiles": "ファイルをここにドラッグ",
+    "promptFilesAdded": "プロンプトファイルが追加されました",
+    "promptFilesAddedDesc": "{count}個のファイルが正常に追加されました",
+    "promptFilesError": "ファイル処理エラー",
+    "promptFilesErrorDesc": "{count}個のファイルの処理に失敗しました",
+    "historyPlaceholder": "（Tabで補完）",
+    "rateLimitQueue": "キュー {count}",
+    "rateLimitWait": "待機 {seconds}秒",
+    "rateLimitQueueTooltip": "キューに{count}個のリクエスト、間隔{interval}秒",
+    "rateLimitReadyTooltip": "送信準備完了、間隔{interval}秒",
+    "rateLimitWaitingTooltip": "あと{seconds}秒待機、間隔{interval}秒",
+    "acpWorkdir": "ACP Workdir",
+    "acpWorkdirTooltip": "Set ACP working directory",
+    "acpWorkdirSelect": "Select a folder to use as the ACP workdir",
+    "acpWorkdirCurrent": "Current workdir: {path}",
+    "acpMode": "モード",
+    "acpModeTooltip": "現在のモード：{mode}",
+    "agentWorkspaceCurrent": "現在の作業ディレクトリ: {path}",
+    "workspaceUnavailableTooltip": "ディレクトリが存在しないかアクセスできません: {path}",
+    "agentWorkspaceSelect": "作業ディレクトリを選択",
+    "agentWorkspaceTooltip": "エージェントの作業ディレクトリを設定する",
+    "attach": "添付",
+    "voiceInput": "音声入力",
+    "voiceInputStop": "音声入力を停止",
+    "voiceRecognitionUnsupportedTitle": "現在の環境は音声認識に対応していません",
+    "voiceRecognitionUnsupportedDescription": "音声認識に対応したブラウザまたはデスクトップ環境でこの機能を使用してください。",
+    "voiceRecognitionPermissionDeniedTitle": "マイクにアクセスできません",
+    "voiceRecognitionPermissionDeniedDescription": "DeepChat にマイクの使用を許可してからもう一度お試しください。",
+    "voiceRecognitionErrorTitle": "音声認識に失敗しました",
+    "voiceRecognitionErrorDescription": "音声認識を完了できませんでした。しばらくしてからもう一度お試しください。",
+    "send": "送信",
+    "steer": "誘導",
+    "queue": "キューに追加",
+    "stop": "停止",
+    "mcp": {
+      "badge": "MCP {count}",
+      "title": "有効な MCP",
+      "empty": "有効なサービスはありません",
+      "openSettings": "MCP 設定を開く"
+    },
+    "tools": {
+      "badge": "Tools",
+      "title": "Tools",
+      "mcpSection": "MCP",
+      "pluginSection": "Plugins",
+      "builtinSection": "内蔵ツール",
+      "loading": "Loading tools...",
+      "builtinEmpty": "No built-in tools available",
+      "groups": {
+        "agentFilesystem": "Agent Filesystem",
+        "agentCore": "Agent Core",
+        "agentImageGeneration": "画像生成",
+        "agentSkills": "Agent Skills",
+        "deepchatSettings": "DeepChat Settings",
+        "yobrowser": "YoBrowser"
+      }
+    },
+    "fileUploadFailed": "添付ファイルの処理に失敗しました",
+    "fileUploadFailedDesc": "次の {count} 件のファイルを処理できませんでした: {names}",
+    "fileUploadFailedMore": " ほか {count} 件",
+    "unnamedFile": "名前のないファイル",
+    "audioInputUnsupportedTitle": "現在のモデルは音声添付をサポートしていません",
+    "audioInputUnsupportedDescription": "モデル {model} は音声入力をサポートしていないため、{count} 件の音声添付を無視しました。"
+  },
+  "pendingInput": {
+    "steer": "誘導",
+    "queueCount": "送信待ち {count}/{max}",
+    "toSteer": "中断して送信",
+    "locked": "ロック済み",
+    "reorder": "並べ替え",
+    "files": "{count} 件のファイル",
+    "attachmentsOnly": "{count} 件の添付ファイル",
+    "empty": "空のメッセージ",
+    "limitReached": "待機レーンがいっぱいです（最大{max}件）。",
+    "remove": "削除",
+    "steerUnavailable": "今は中断できません",
+    "steerFailed": "このターンを中断できませんでした"
+  },
+  "features": {
+    "webSearch": "ウェブ検索",
+    "artifactThinking": "アーティファクト思考",
+    "thoughtForSeconds": "{seconds}秒間思考しました",
+    "thoughtForSecondsLoading": "{seconds}秒間思考中...",
+    "modeChanged": "モードが次のように切り替わりました: {mode}"
+  },
+  "search": {
+    "results": "{0}件のウェブページが見つかりました",
+    "searching": "検索中...",
+    "title": "検索結果",
+    "description": "{0}件の関連結果が見つかりました",
+    "optimizing": "検索意図の抽出中...",
+    "reading": "ウェブページを読み込み中...",
+    "error": "検索に失敗しました"
+  },
+  "messages": {
+    "thinking": "思考中...",
+    "rateLimitWaiting": "レート制限により、キューで待機中...",
+    "rateLimitCompactLoading": "制限中（{seconds}秒）",
+    "rateLimitTitle": "リクエストレート制限",
+    "rateLimitQueue": "キューの位置",
+    "rateLimitEstimated": "推定待機時間",
+    "rateLimitQuickSettings": "制限を調整",
+    "rateLimitSwitchProvider": "プロバイダーを切り替え",
+    "rateLimitImmediately": "すぐに",
+    "rateLimitSeconds": "秒",
+    "rateLimitMinutes": "分"
+  },
+  "rateLimit": {
+    "queueTooltip": "キューに{count}個のリクエスト、間隔{interval}秒",
+    "readyTooltip": "送信準備完了、間隔{interval}秒",
+    "waitingTooltip": "あと{seconds}秒待機、間隔{interval}秒"
+  },
+  "notify": {
+    "generationComplete": "生成完了",
+    "generationError": "生成失敗"
+  },
+  "toolCall": {
+    "title": "ツール呼び出し",
+    "calling": "ツール呼び出し中",
+    "response": "ツール応答",
+    "end": "ツール呼び出し完了",
+    "error": "ツール呼び出しエラー",
+    "clickToView": "詳細を表示",
+    "functionName": "関数名",
+    "params": "パラメータ",
+    "responseData": "レスポンスデータ",
+    "subagents": {
+      "summary": "{mode} · {count} 個のサブエージェント",
+      "unnamedTask": "名前未設定のタスク",
+      "mode": {
+        "parallel": "並列",
+        "chain": "直列"
+      },
+      "status": {
+        "queued": "待機中",
+        "running": "実行中",
+        "completed": "完了",
+        "error": "エラー",
+        "cancelled": "キャンセル済み",
+        "waiting_permission": "権限待ち",
+        "waiting_question": "入力待ち"
+      }
+    }
+  },
+  "mode": {
+    "acpAgent": "ACPエージェント",
+    "agent": "エージェント",
+    "current": "現在のモード: {mode}"
+  },
+  "topbar": {
+    "share": "共有",
+    "more": "その他",
+    "backToParent": "親セッションに戻る"
+  },
+  "advancedSettings": {
+    "button": "詳細設定",
+    "title": "詳細設定",
+    "closeHint": "Esc で閉じる",
+    "systemPrompt": "システムプロンプト",
+    "systemPromptPlaceholder": "プリセットを選択",
+    "temperature": "温度",
+    "topP": "Top P",
+    "topPDescription": "核サンプリング。空欄でプロバイダーの既定値を使用",
+    "contextLength": "コンテキスト長",
+    "maxTokens": "最大トークン",
+    "thinkingBudget": "思考予算",
+    "verbosity": "回答の詳しさ",
+    "forceInterleavedThinkingCompat": "Interleaved Thinking",
+    "forceInterleavedThinkingCompatDescription": "このセッションで reasoning と tool-call メッセージを Interleaved Thinking として処理するかを制御します。",
+    "verbosityPlaceholder": "詳しさを選択",
+    "currentCustomPrompt": "現在のカスタム",
+    "useDefault": "デフォルトを使用",
+    "decreaseValue": "{label}を減らす",
+    "increaseValue": "{label}を増やす",
+    "toggleValue": "{label}のオン・オフを切り替える",
+    "validation": {
+      "finiteNumber": "有限の数値である必要があります",
+      "nonNegativeInteger": "0以上の整数である必要があります",
+      "contextLengthAtLeastMaxTokens": "最大トークン数以上である必要があります",
+      "maxTokensWithinContextLength": "コンテキスト長以下である必要があります",
+      "topPRange": "0 より大きく 1 以下である必要があります"
+    }
+  },
+  "workspace": {
+    "collapse": "近い",
+    "expand": "展開",
+    "sections": {
+      "files": "ファイル",
+      "git": "Git",
+      "artifacts": "Artifacts",
+      "subagents": "サブエージェント"
+    },
+    "files": {
+      "contextMenu": {
+        "insertPath": "入力ボックスに挿入",
+        "openFile": "ファイルを開く",
+        "revealInFolder": "ファイルマネージャーで開く"
+      },
+      "empty": "まだファイルがありません",
+      "loading": "ファイルをロード中...",
+      "noWorkspace": {
+        "title": "ワークスペースなし",
+        "description": "フォルダを選択してワークスペースを設定",
+        "button": "フォルダを選択"
+      },
+      "section": "書類",
+      "watchStatus": {
+        "degraded": "フォールバックモードで監視しています。変更の反映が遅くなる場合があります。",
+        "failed": "ファイル監視を利用できません。更新するか、ワークスペースを選択し直してください。"
+      }
+    },
+    "git": {
+      "empty": "表示できる diff はありません",
+      "clean": "ワークツリーはクリーンです",
+      "staged": "ステージ済み",
+      "unstaged": "未ステージ"
+    },
+    "browser": {
+      "section": "ブラウザ",
+      "empty": "タブがありません"
+    },
+    "plan": {
+      "empty": "まだタスクはありません",
+      "section": "プラン",
+      "itemAriaLabel": "{status}: {step}",
+      "status": {
+        "completed": "完了しました",
+        "in_progress": "進行中",
+        "pending": "保留中",
+        "interrupted": "中断しました"
+      },
+      "completedCount": "{completed}/{total} 完了"
+    },
+    "terminal": {
+      "empty": "まだ出力はありません",
+      "section": "ターミナル",
+      "contextMenu": {
+        "terminate": "コマンドを停止",
+        "delete": "記録を削除",
+        "expand": "展開",
+        "collapse": "折りたたむ"
+      },
+      "output": {
+        "truncated": "[切り捨て]"
+      },
+      "noOutput": "出力なし",
+      "status": {
+        "completed": "成功",
+        "failed": "失敗",
+        "running": "実行中",
+        "timed_out": "タイムアウトしました",
+        "aborted": "中止"
+      }
+    },
+    "title": "ワークスペース",
+    "subagents": {
+      "empty": "子セッションはまだありません",
+      "self": "このエージェント",
+      "status": {
+        "working": "実行中",
+        "error": "エラー",
+        "idle": "待機中"
+      }
+    }
+  },
+  "modelPicker": {
+    "empty": "モデルが見つかりません",
+    "audioInputSupported": "音声入力をサポート"
+  },
+  "audio": {
+    "play": "再生",
+    "pause": "一時停止"
+  },
+  "call": {
+    "title": "Voice.ai 通話",
+    "description": "クリックして Voice.ai 音声エージェントに接続し、通話がつながったら話してください。",
+    "start": "音声通話を開始",
+    "stop": "通話を終了",
+    "end": "切断"
+  },
+  "skills": {
+    "indicator": {
+      "active": "{count}個のスキルが有効化されました",
+      "none": "アクティブスキルなし"
+    },
+    "panel": {
+      "empty": "インストールされたスキルがありません",
+      "manage": "管理",
+      "title": "スキル"
+    }
+  },
+  "compaction": {
+    "compacting": "コンテキストを圧縮しています...",
+    "compacted": "コンテキストは圧縮されました",
+    "commandDescription": "会話コンテキストを圧縮",
+    "noopTitle": "圧縮できるコンテキストがありません",
+    "noopDescription": "まだ圧縮できる新しい会話履歴がありません。",
+    "failedTitle": "圧縮に失敗しました"
+  },
+  "newThread": {
+    "title": "作成して探索"
+  },
+  "permissionMode": {
+    "default": "デフォルト権限",
+    "fullAccess": "フルアクセス",
+    "autoApprove": "代わりに承認"
+  },
+  "sidebar": {
+    "allAgents": "すべてのエージェント",
+    "expandSidebar": "サイドバーを展開",
+    "collapseSidebar": "サイドバーを折りたたむ",
+    "themeToggle": "テーマを切り替え",
+    "themeLight": "ライト",
+    "themeDark": "ダーク",
+    "themeSystem": "システム",
+    "remoteControlStatus": {
+      "disabled": "リモート操作は無効です",
+      "stopped": "リモート操作は停止しました",
+      "starting": "リモート操作を開始中",
+      "running": "リモート操作は稼働中です",
+      "backoff": "リモート操作を再試行中",
+      "error": "リモート操作エラー"
+    },
+    "groupByDate": "日付でグループ化",
+    "groupByProject": "プロジェクトでグループ化",
+    "pinned": "ピン留め",
+    "chats": "チャット",
+    "emptyTitle": "まだ会話がありません",
+    "emptyDescription": "新しいチャットを始めましょう",
+    "remoteControlDisabled": "無効",
+    "searchPlaceholder": "チャットタイトルを検索",
+    "searchAriaLabel": "チャットタイトルを検索",
+    "searchEmptyTitle": "一致する会話はありません",
+    "searchEmptyDescription": "別のキーワードを試してください",
+    "projectGroupActions": "プロジェクトグループ操作",
+    "moveProjectGroupTop": "最上部へ移動",
+    "moveProjectGroupUp": "上へ移動",
+    "moveProjectGroupDown": "下へ移動",
+    "moveProjectGroupBottom": "最下部へ移動",
+    "searchCommand": "Search",
+    "chatSection": "Chat",
+    "workspace": "Workspace",
+    "searchLoadedRangeDescription": "読み込み済みの会話から一致する項目を表示しています。スクロールして履歴をさらに読み込めます。"
+  },
+  "floatingWidget": {
+    "title": "タスク概要",
+    "collapse": "フローティングセッションを折りたたむ",
+    "empty": "Agent セッションはまだありません",
+    "executing": "アクティブ",
+    "sessionCount": "{count}件のセッション",
+    "untitled": "新しいチャット",
+    "status": {
+      "inProgress": "進行中",
+      "done": "完了",
+      "error": "エラー"
+    }
+  },
+  "subagents": {
+    "label": "サブエージェント"
+  },
+  "spotlight": {
+    "placeholder": "会話、Agent、設定、アクションを検索…",
+    "searching": "検索中…",
+    "emptyTitle": "一致する結果がありません",
+    "emptyDescription": "別のキーワードを試すか、最近のセッションを開いてください。",
+    "hints": "↑↓ 移動 · Enter 開く · Esc 閉じる · Home/End ジャンプ",
+    "kind": {
+      "session": "セッション",
+      "message": "メッセージ",
+      "agent": "Agent",
+      "setting": "設定",
+      "action": "アクション"
+    }
+  },
+  "inlineSearch": {
+    "placeholder": "現在の会話を検索",
+    "ariaLabel": "現在の会話を検索",
+    "previous": "前の一致",
+    "next": "次の一致",
+    "close": "検索を閉じる"
+  },
+  "onboarding": {
+    "agentSwitch": {
+      "title": "DeepChat Agent に切り替える",
+      "description": "チャットを始める前に ACP から切り替え、組み込みの DeepChat フローに戻ってください。",
+      "caption": "続行するには、サイドバーでハイライトされたエージェントボタンをクリックしてください。"
+    },
+    "switchModel": {
+      "description": "最初の DeepChat 会話で使用するモデルを選択してください。",
+      "caption": "ハイライトされたモデル切り替えを使って、利用可能な任意のモデルを選んでください。"
+    },
+    "firstChat": {
+      "description": "準備は完了です。ここに最初のメッセージを入力してオンボーディングを完了しましょう。",
+      "caption": "最初のメッセージを送信するまで、スポットライトは入力欄に表示されたままです。"
+    }
+  },
+  "messageReceipt": {
+    "unread": "未読",
+    "read": "既読"
+  },
+  "attachments": {
+    "chooseRepresentation": "{name} の送信方法を選択",
+    "representation": "添付ファイルの送信形式",
+    "auto": "自動",
+    "sendImage": "画像を送信",
+    "useOcrText": "OCR テキストを使用",
+    "useEmbeddedText": "埋め込みテキストを使用",
+    "preparing": "添付ファイルを処理しています…",
+    "actionRequiredTitle": "添付ファイルを確認してください",
+    "actionRequiredDescription": "1 件以上の添付ファイルを使用できません。続行方法を選択してください。",
+    "attachmentNumber": "添付ファイル {number}",
+    "moreIssues": "ほかに {count} 件の添付ファイルの問題があります",
+    "genericUnavailable": "使用できる添付ファイルの内容がありません。",
+    "keepDraft": "下書きを保持",
+    "switchVisionModel": "画像対応モデルに切り替える",
+    "retry": "再試行",
+    "sendWithoutImageContent": "添付内容を省略",
+    "inspectOcrText": "OCR テキストを表示",
+    "ocrBadge": "OCR",
+    "embeddedTextBadge": "テキスト",
+    "ocrPartialBadge": "OCR · 一部",
+    "ocrLimitedBadge": "OCR · 制限",
+    "imageBadge": "画像",
+    "unavailableBadge": "利用不可",
+    "ocrPreviewTitle": "OCR テキスト — {name}",
+    "ocrPreviewDescription": "約 {tokens} トークンが、信頼できない添付ファイルの内容として送信されました。",
+    "ocrPageCoverage": "{page} ページまでのテキストを含みます。",
+    "ocrPageCoveragePartial": "{page} ページの一部を含みます。",
+    "ocrTextTruncated": "この OCR テキストは送信前に切り詰められました。",
+    "reasons": {
+      "automatic_ocr_disabled": "自動 OCR はオフになっています。",
+      "document_limit_exceeded": "1 回のリクエストで OCR を使用できる PDF は 1 件だけです。",
+      "document_too_large": "PDF がファイルサイズの上限を超えています。",
+      "image_dimensions_exceeded": "デコード後の画像サイズが安全上の上限を超えています。",
+      "image_limit_exceeded": "このターンの画像数が OCR の処理上限を超えています。",
+      "image_payload_unavailable": "元の画像データは利用できなくなりました。",
+      "image_too_large": "画像がファイル単位のサイズ上限を超えています。",
+      "ocr_cancelled": "OCR はキャンセルされました。",
+      "ocr_empty": "OCR で使用可能なテキストを検出できませんでした。",
+      "ocr_failed": "OCR でこの添付ファイルを処理できませんでした。",
+      "ocr_queue_full": "OCR は処理中です。現在の添付ファイルの処理完了後に再試行してください。",
+      "ocr_resource_limited": "PDF の処理上限に達したため OCR を停止しました。",
+      "ocr_runtime_unavailable": "このプラットフォームまたはインストール環境では OCR を利用できません。",
+      "invalid_attachment_snapshot": "保存された OCR データが無効です。",
+      "turn_ocr_budget_exhausted": "OCR テキストがこのメッセージの添付テキスト上限を超えています。",
+      "pdf_text_unavailable": "この PDF には使用できる埋め込みテキストがありません。",
+      "requested_image_requires_vision": "「画像を送信」には画像対応モデルが必要です。",
+      "turn_image_bytes_exceeded": "このターンの画像が合計サイズの上限を超えています。",
+      "user_skipped_attachment_content": "選択に従って添付ファイルの内容を省略しました。",
+      "user_skipped_image_content": "選択に従って画像の内容を省略しました。",
+      "unsupported_image_format": "この画像形式は OCR でサポートされていません。"
+    },
+    "pending": {
+      "blockedCount": "{count} 件保留",
+      "blocked": "保留",
+      "retry": "OCR を再試行",
+      "sendWithoutImageContent": "添付内容を省略",
+      "blockedDescription": "この項目は添付ファイルの処理方法が選択されるまで保留されています。",
+      "blockedReasonMore": "{reason} ほかに {count} 件の問題があります。",
+      "resolveFailed": "保留中のメッセージを処理できませんでした"
+    }
+  },
+  "skillDraft": {
+    "confirmationTitle": "スキルドラフト",
+    "confirmationQuestion": "スキルドラフトが生成されました: {name}",
+    "previewTitle": "ドラフト内容のプレビュー",
+    "actions": {
+      "view": "内容を表示",
+      "viewDescription": "ドラフトの SKILL.md 内容をプレビュー",
+      "install": "スキルとしてインストール",
+      "installDescription": "管理できるようにスキルフォルダへインポート",
+      "discard": "破棄",
+      "discardDescription": "この一時ドラフトを削除"
+    },
+    "result": {
+      "viewed": "ドラフト内容のプレビューを開きました。インストールまたは破棄を選択してください。",
+      "installed": "スキルドラフトをインストールしました: {name}",
+      "discarded": "スキルドラフトを破棄しました。",
+      "failed": "スキルドラフトの処理に失敗しました: {error}"
+    }
+  },
+  "activityCollapse": {
+    "workedFor": "{duration} 作業しました",
+    "reasoningCount": "{count} 件の思考",
+    "toolCallCount": "{count} 件のツール呼び出し",
+    "expandLabel": "{title} を展開",
+    "collapseLabel": "{title} を折りたたむ",
+    "duration": {
+      "day": "日",
+      "hour": "時間",
+      "minute": "分",
+      "second": "秒"
+    }
+  },
+  "memory": {
+    "toolbar": "使用したメモリ",
+    "status": {
+      "archived": "忘却済み"
+    },
+    "actions": {
+      "undo": "元に戻す",
+      "forget": "忘れる",
+      "edit": "編集"
+    },
+    "chip": {
+      "title": "メモリを更新 {count}",
+      "heading": "メモリを更新",
+      "description": "このターンで次のメモリが追加されました。"
+    },
+    "selection": {
+      "remember": "これを記憶"
+    },
+    "turn": {
+      "title": "このターンで使用したメモリ",
+      "empty": "このターンではメモリが注入されていません",
+      "selected": "選択",
+      "dropped": "除外",
+      "tokens": "トークン",
+      "budget": "予算",
+      "allocation": "メモリ投入予算の配分",
+      "directive": "ディレクティブ",
+      "persona": "ペルソナ",
+      "working": "ワーキングメモリ",
+      "queryRecall": "クエリ検索",
+      "overhead": "オーバーヘッド",
+      "unused": "未使用",
+      "overheadSummary": "オーバーヘッド {overhead} · 未使用 {unused}",
+      "countOnly": "この記録には件数の概要のみが含まれています。",
+      "unavailable": "このメモリは利用できなくなりました。",
+      "noSelectedDetails": "このターンで表示できるメモリ詳細はありません。",
+      "refreshFailed": "更新に失敗しました。前回読み込んだメモリを表示しています。",
+      "error": "このターンで使用されたメモリを読み込めませんでした。"
+    },
+    "toast": {
+      "undoSuccess": "メモリを元に戻しました",
+      "undoFailed": "メモリを元に戻せませんでした",
+      "forgetSuccess": "メモリを忘却しました",
+      "forgetFailed": "メモリを忘却できませんでした",
+      "amendFailed": "メモリを更新できませんでした",
+      "rememberFailed": "メモリを保存できませんでした",
+      "add": {
+        "created": "新しいメモリとして保存しました",
+        "updated": "既存のメモリを更新しました",
+        "superseded": "更新済みメモリに統合しました",
+        "challenged": "確認が必要なメモリとして記録しました",
+        "noop": "新しいメモリは追加されませんでした"
+      }
+    },
+    "errors": {
+      "actionFailed": "操作に失敗しました。もう一度お試しください。",
+      "amendRetryable": "編集に失敗しました。元のメモリは復元されたので、もう一度お試しください。",
+      "amendRestoreFailed": "編集に失敗し、元のメモリも復元できませんでした。"
+    }
+  },
+  "orchestration": {
+    "actions": { "openChild": "子 Agent を開く" },
+    "activityTitle": "Agent のアクティビティ",
+    "proactive": {
+      "title": "プロアクティブ連携",
+      "description": "独立または並列の作業に明確な効果がある場合、親 Agent が自律的に委任できます。時間、Token、システム資源の使用量が増える場合があります。",
+      "reasons": {
+        "session_unavailable": "このセッションは利用できなくなりました。",
+        "agent_unavailable": "選択した Agent は利用できません。",
+        "deepchat_agent_required": "プロアクティブ連携には DeepChat Agent が必要です。",
+        "regular_parent_required": "子セッションではプロアクティブ連携を利用できません。",
+        "agent_policy_unavailable": "連携ポリシーを読み込めませんでした。",
+        "subagents_disabled": "プロアクティブ連携を使用するには、この Agent の Subagent を有効にしてください。"
+      }
+    }
+  }
+}
