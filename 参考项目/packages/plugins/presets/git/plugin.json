@@ -1,0 +1,18 @@
+{
+	"id": "git",
+	"name": "%plugin.name%",
+	"icon": "icon.png",
+	"version": "0.2.9",
+	"defaultLocale": "zh",
+	"pluginApiVersion": "^2.0.0",
+	"entry": "dist/mf-manifest.json",
+	"moduleFederation": {
+		"remoteName": "git",
+		"expose": "./plugin"
+	},
+	"styles": ["dist/style.css"],
+	"permissions": ["ui.slot.activity-tab", "ui.slot.turn-card", "agent.session.read", "agent.command.run"],
+	"commands": ["git"],
+	"description": "%plugin.description%",
+	"author": "Vetta"
+}
