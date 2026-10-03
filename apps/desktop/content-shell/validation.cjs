@@ -21,7 +21,9 @@ function compareVersions(left, right) {
 }
 
 function decodeBase64(value) {
-  if (typeof value !== "string" || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value)) {
+  // Re-encoding proves canonical alphabet, padding and unused bits without a
+  // repeated-group regexp, whose stack grows with multi-megabyte bundles.
+  if (typeof value !== "string" || value.length % 4 !== 0) {
     throw new Error("Invalid base64 encoding");
   }
   const data = Buffer.from(value, "base64");

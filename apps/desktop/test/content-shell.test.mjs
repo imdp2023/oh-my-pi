@@ -67,6 +67,13 @@ test("payload corruption and unsafe archive paths fail before extraction", () =>
   }
 });
 
+test("multi-megabyte bundled JavaScript validates without recursive regex overflow", () => {
+  const file = { path: "out/main/large-bundle.js", data: Buffer.alloc(4 * 1024 * 1024, 7).toString("base64") };
+  const f = fixture("1.0.1", [file]);
+  const files = validatePayload(f.payload, f.manifest);
+  assert.equal(files.find(entry => entry.path === file.path).data.length, 4 * 1024 * 1024);
+});
+
 test("user path: check → download → confirm → new process → healthy, without touching user data", async t => {
   const { root, store } = setup(t);
   const userData = join(root, "user-data.sqlite");
