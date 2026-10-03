@@ -1,5 +1,11 @@
 # 06. Desktop Release Runbook
 
+The `imdp2023/oh-my-pi` personal macOS arm64 fork has a separate
+[content-update lane](08-personal-content-updates.md) and
+[operator guide](../../personal-release.md). Its `main` version-file-triggered
+Actions build uses an ad hoc signature rather than the upstream Developer ID
+below. Do not use the upstream notarization credentials for that lane.
+
 > Scope: D126/D285/D603 tag artifacts for macOS arm64 and Intel x64, Windows x64,
 > and Linux x64 and arm64, including the Linux system-Electron ASAR assets;
 > macOS signing/notarization remains the detailed qualification lane below.

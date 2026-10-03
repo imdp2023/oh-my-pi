@@ -27,7 +27,8 @@ import {
   type McpControlInvokeInput,
 } from "../mcp-control";
 import type { ModelsDevCatalog } from "../models-dev-catalog";
-import type { AppUpdaterController } from "../updater";
+import type { UpdaterController } from "../updater-factory";
+import { getContentShellBridge } from "../updater-factory";
 import type { HostProcess } from "../host-process";
 import type { Logger } from "../logger";
 import type { PluginRuntime } from "../plugin-runtime";
@@ -73,7 +74,8 @@ export type StartupDependencies = {
   state: StartupState;
   dataDir: string;
   logger: Logger;
-  updater: AppUpdaterController;
+  updater: UpdaterController;
+  applicationVersion?: string;
   modelsDevCatalog: ModelsDevCatalog;
   plugins: PluginRuntime;
   /**
@@ -167,6 +169,7 @@ export function registerApplicationStartup(deps: StartupDependencies): void {
       ensureWindow,
       bootHostStatus,
       flushPendingApplicationMenuCommands,
+      applicationVersion = APP_VERSION,
     } = deps;
 
     // A launch that lost the single-instance lock is already quitting. Never
@@ -204,8 +207,8 @@ export function registerApplicationStartup(deps: StartupDependencies): void {
     createTray();
     app.setAboutPanelOptions({
       applicationName: APP_NAME,
-      applicationVersion: APP_VERSION,
-      version: APP_VERSION,
+      applicationVersion,
+      version: applicationVersion,
     });
     installApplicationMenu({
       locale: app.getLocale(),
@@ -242,7 +245,7 @@ export function registerApplicationStartup(deps: StartupDependencies): void {
       },
       router: state.backendRouter,
       emit: sendToRenderer,
-      clientInfo: { name: APP_NAME, version: APP_VERSION },
+      clientInfo: { name: APP_NAME, version: applicationVersion },
       log: (level, message, data) =>
         logger.app("runtime", level, message, { data: formatRemoteLogData(data) }),
     });
@@ -337,6 +340,7 @@ export function registerApplicationStartup(deps: StartupDependencies): void {
       applyToggleWindowShortcut();
     }
     await ensureWindow();
+    const contentShell = getContentShellBridge();
     if (process.env.PI_DESKTOP_MCP_CONTROL === "1") {
       try {
         state.mcpControl = new McpControlServer({
@@ -373,6 +377,28 @@ export function registerApplicationStartup(deps: StartupDependencies): void {
       sendToRenderer(IPC.event.hostStatus, bootHostStatus(bootError));
       state.applicationBooted = true;
       flushPendingApplicationMenuCommands();
+      if (!bootError && contentShell) {
+        const window = getMainWindow();
+        if (!window || window.isDestroyed() || window.webContents.isDestroyed()) return;
+        const readinessProbe = [
+          "new Promise((resolve, reject) => {",
+          "  const ready = () => document.querySelector('.app-shell:not(.app-shell-boot)') && typeof window.piDesktop?.invoke === 'function';",
+          "  const finish = (ok) => { observer.disconnect(); clearTimeout(timeout); ok ? resolve(true) : reject(new Error('renderer did not become ready')); };",
+          "  const verifyHost = () => window.piDesktop.invoke(window.piDesktop.channels.invoke.appHealth).then((result) => { if (result?.ok && result.data?.ok) finish(true); else finish(false); }, () => finish(false));",
+          "  const observer = new MutationObserver(() => { if (ready()) { observer.disconnect(); verifyHost(); } });",
+          "  const timeout = setTimeout(() => finish(false), 15000);",
+          "  observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });",
+          "  if (ready()) { observer.disconnect(); verifyHost(); }",
+          "})",
+        ].join("\n");
+        void window.webContents.executeJavaScript(readinessProbe).then(() => {
+          (updater as UpdaterController & { markHealthy?: () => void }).markHealthy?.();
+        }).catch((error: unknown) => {
+          logger.app("runtime", "warn", "content update health acknowledgement skipped", {
+            data: error instanceof Error ? error.message : String(error),
+          });
+        });
+      }
     }, 300);
 
     // Headless boot probe for automated e2e (scripts/e2e-electron-boot.mjs):

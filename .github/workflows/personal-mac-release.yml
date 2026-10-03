@@ -1,0 +1,160 @@
+name: Personal macOS Release
+
+on:
+  push:
+    branches: [main]
+    paths: [release-version.json]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: personal-mac-release
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    if: github.repository == 'imdp2023/oh-my-pi' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.version.outputs.release }}
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+      - id: version
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        shell: bash
+        run: |
+          changed=true
+          if [[ "$GITHUB_EVENT_NAME" != workflow_dispatch && -n "$BEFORE_SHA" && ! "$BEFORE_SHA" =~ ^0+$ ]]; then
+            if git cat-file -e "${BEFORE_SHA}:release-version.json" 2>/dev/null; then
+              mkdir -p .release-before
+              git show "${BEFORE_SHA}:release-version.json" > .release-before/release-version.json
+              changed=$(node scripts/personal-release.mjs trigger .release-before/release-version.json)
+            fi
+          fi
+          version=$(node --input-type=module -e 'import {readFileSync} from "node:fs"; import {parseReleaseVersion} from "./scripts/personal-release.mjs"; process.stdout.write(parseReleaseVersion(readFileSync("release-version.json","utf8")).version)')
+          echo "release=$changed" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=personal-v$version" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: gate
+    if: needs.gate.outputs.release == 'true'
+    runs-on: macos-14
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.8.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: pnpm
+      - name: Validate release identity and signing key
+        env:
+          CONTENT_UPDATE_PRIVATE_KEY: ${{ secrets.CONTENT_UPDATE_PRIVATE_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.gate.outputs.tag }}
+        run: |
+          [[ "$(uname -m)" == arm64 ]] || { echo "macOS arm64 runner required" >&2; exit 1; }
+          node scripts/personal-release.mjs check-key
+          gh api --paginate "repos/$GH_REPO/releases" --jq '.[] | select(.draft == false) | .tag_name' > .release-tags
+          node scripts/personal-release.mjs assert-newer $(cat .release-tags)
+          if gh release view "$TAG" --json isDraft --jq '.isDraft' > .release-exists 2>/dev/null; then
+            grep -qx true .release-exists || { echo "Published versions cannot be overwritten" >&2; exit 1; }
+          fi
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: pnpm install --frozen-lockfile
+      - name: Prepare personal version and fixed shell
+        run: node scripts/personal-release.mjs prepare
+      - name: Build and validate JavaScript
+        run: |
+          pnpm --filter @pi-desktop/desktop run build:deps
+          pnpm --filter @pi-desktop/desktop typecheck
+          node scripts/test-personal-release.mjs
+          node --test apps/desktop/test/content-shell.test.mjs apps/desktop/test/content-update-controller.test.mjs
+          node scripts/check-style-tokens.mjs
+      - name: Build native host and desktop
+        run: |
+          cargo build --release --locked -p host-core
+          pnpm --filter @pi-desktop/agent-runtime bundle
+          pnpm --filter @pi-desktop/desktop build
+          node -e 'require("./apps/desktop/node_modules/electron")'
+          node scripts/e2e-personal-content-update.mjs
+          pnpm --filter @pi-desktop/desktop exec electron-builder --mac --arm64 --publish never
+      - name: Verify real personal package startup
+        run: node scripts/e2e-personal-packaged.mjs
+      - name: Sign content payload and stage complete release
+        env:
+          CONTENT_UPDATE_PRIVATE_KEY: ${{ secrets.CONTENT_UPDATE_PRIVATE_KEY }}
+        run: |
+          node scripts/personal-release.mjs payload
+          mkdir -p release-assets
+          cp apps/desktop/release/PI-Desktop-Personal-*.dmg release-assets/
+          cp apps/desktop/release/PI-Desktop-Personal-*-arm64-mac.zip release-assets/
+          cp content-*.json.gz content-manifest.json content-manifest.sig release-assets/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: personal-mac-release
+          if-no-files-found: error
+          path: release-assets/*
+          retention-days: 7
+
+  publish:
+    needs: [gate, build]
+    if: needs.gate.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: personal-mac-release
+          path: release-assets
+      - name: Validate complete artifact set
+        run: |
+          names=$(find release-assets -maxdepth 1 -type f -printf '%f\n')
+          node scripts/personal-release.mjs verify-assets $names
+      - name: Upload draft, verify, then publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.gate.outputs.tag }}
+          VERSION: ${{ needs.gate.outputs.version }}
+          TARGET: ${{ github.sha }}
+        run: |
+          gh api --paginate "repos/$GH_REPO/releases" --jq '.[] | select(.draft == false) | .tag_name' > .release-tags
+          node scripts/personal-release.mjs assert-newer $(cat .release-tags)
+          if gh release view "$TAG" --json isDraft --jq '.isDraft' > .release-exists 2>/dev/null; then
+            grep -qx true .release-exists || { echo "Published versions cannot be overwritten" >&2; exit 1; }
+          else
+            gh release create "$TAG" --draft --target "$TARGET" --title "PI-Desktop Personal $VERSION" --notes "Mac arm64 personal build. Install the app once; compatible updates use signed content packages and an explicit restart. Ad hoc signed, not notarized."
+          fi
+          gh release upload "$TAG" release-assets/* --clobber
+          names=$(gh release view "$TAG" --json assets --jq '.assets[].name')
+          node scripts/personal-release.mjs verify-assets $names
+          gh release edit "$TAG" --draft=false --latest

@@ -1,6 +1,7 @@
 import {
   app,
   BrowserWindow,
+  dialog,
   ipcMain,
   powerMonitor,
   session,
@@ -38,6 +39,8 @@ import {
 } from "./models-dev-catalog";
 import { VendorOAuth } from "./oauth";
 import { AppUpdaterController } from "./updater";
+import { ContentUpdateController } from "./content-update-controller";
+import { createUpdaterController, getContentShellBridge } from "./updater-factory";
 import {
   WINDOW_MIN_HEIGHT,
   WINDOW_MIN_WIDTH,
@@ -235,10 +238,14 @@ const inflightCheckpointer = new InflightCheckpointer(async (checkpoint) => {
   );
 });
 
-const updater = new AppUpdaterController({
+const contentShell = getContentShellBridge();
+const currentAppVersion = contentShell?.version ?? APP_VERSION;
+const updater = createUpdaterController({
+  bridge: contentShell,
+  createElectronUpdater: () => new AppUpdaterController({
   logger,
   send: sendToRenderer,
-  currentVersion: APP_VERSION,
+  currentVersion: currentAppVersion,
   isPackaged: !isDevelopmentBuild,
   getLocale: () => mainState.updaterLocale,
   readUpdateSettings: async () => {
@@ -254,6 +261,43 @@ const updater = new AppUpdaterController({
     if (!host?.isAvailable()) throw new Error("host unavailable");
     await host.call("settings.set", { lastNotifiedUpdateVersion: version });
   },
+  }),
+  createContentUpdater: (bridge) => new ContentUpdateController({
+    bridge,
+    logger,
+    send: sendToRenderer,
+    getLocale: () => app.getLocale(),
+    showNativeMessage: async ({ title, message, buttons }) => {
+      const result = await dialog.showMessageBox({
+        type: "info",
+        title,
+        message,
+        buttons,
+        defaultId: 0,
+        cancelId: buttons.length - 1,
+        noLink: true,
+      });
+      return result.response;
+    },
+    relaunchAndQuit: (args) => {
+      app.relaunch({ args });
+      app.quit();
+    },
+    openExternal: (url) => safeOpenExternal(url),
+    readUpdatePreference: async () => {
+      const host = getHost();
+      if (!host?.isAvailable()) throw new Error("host unavailable");
+      const settings = await host.call<{ updatePreference?: unknown }>("settings.get");
+      return settings.updatePreference;
+    },
+    getBusyReason: () => {
+      if (activeTurns.size || claimedExecutionSessions.size || dispatchingApprovedExecutions.size || scheduledRunsBySession.size) {
+        return "An agent task is still active.";
+      }
+      if (liveCallActive) return "A live voice call is still active.";
+      return null;
+    },
+  }),
 });
 
 /**
@@ -570,6 +614,7 @@ const {
 
 /** sessionId → open host turn id, for turn bookkeeping across agent events. */
 const activeTurns = new Map<string, string>();
+let liveCallActive = false;
 /** Plan submission turns end without a task-complete notification. */
 const planSubmissionTurnIds = new Set<string>();
 /** sessionId → host execution id for an approved plan currently dispatched. */
@@ -827,7 +872,10 @@ const liveCallService = createLiveCallService({
     });
   },
   log: (level, message, data) => logger.app("provider", level, message, { data }),
-  onCallView: (view) => liveVoiceWidget.publish(view),
+  onCallView: (view) => {
+    liveCallActive = view !== null && view.phase !== "ended" && view.phase !== "failed";
+    liveVoiceWidget.publish(view);
+  },
 });
 
 function registerIpc() {
@@ -853,6 +901,7 @@ function registerIpc() {
     togglePluginLauncher,
     safeOpenExternal,
     updater,
+    currentVersion: currentAppVersion,
     dataDir,
     activeTurns,
     isTurnDispatchable,
@@ -985,6 +1034,7 @@ registerApplicationStartup({
   dataDir,
   logger,
   updater,
+  applicationVersion: currentAppVersion,
   modelsDevCatalog,
   plugins,
   isSessionBusy,

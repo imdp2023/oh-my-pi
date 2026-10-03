@@ -17,6 +17,12 @@ export type {
 } from "@pi-desktop/host-runtime";
 
 function resolveSidecarEntry(): string {
+  const contentSidecar = (globalThis as typeof globalThis & {
+    __PI_CONTENT_SHELL__?: { sidecarPath?: unknown };
+  }).__PI_CONTENT_SHELL__?.sidecarPath;
+  if (typeof contentSidecar === "string" && contentSidecar.length > 0) {
+    return contentSidecar;
+  }
   const candidates = [
     join(process.resourcesPath || "", "agent-runtime/sidecar.js"),
     join(

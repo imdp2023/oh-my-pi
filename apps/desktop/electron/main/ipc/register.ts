@@ -92,6 +92,7 @@ export function registerIpcHandlers(dependencies: RegisterIpcDependencies) {
     togglePluginLauncher,
     safeOpenExternal,
     updater,
+    currentVersion,
     dataDir,
     activeTurns,
     isTurnDispatchable,
@@ -238,6 +239,7 @@ export function registerIpcHandlers(dependencies: RegisterIpcDependencies) {
     togglePluginLauncher,
     safeOpenExternal,
     updater,
+    currentVersion,
   });
   registerStorageIpc({ registrar, getMainWindow, restart: dependencies.restartForStorage });
   registerNotificationIpc({

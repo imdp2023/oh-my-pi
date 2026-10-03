@@ -13,7 +13,7 @@ import {
 } from "@pi-desktop/shared";
 import { globalInstructionPath } from "@pi-desktop/agent-runtime";
 import type { HostProcess } from "../host-process";
-import type { AppUpdaterController } from "../updater";
+import type { UpdaterController } from "../updater-factory";
 import type { IpcRegistrar } from "./types";
 
 export type AppIpcDependencies = {
@@ -22,7 +22,8 @@ export type AppIpcDependencies = {
   getPluginLauncherWindow: () => BrowserWindow | null;
   togglePluginLauncher: () => Promise<void>;
   safeOpenExternal: (url: unknown) => Promise<void>;
-  updater: AppUpdaterController;
+  updater: UpdaterController;
+  currentVersion?: string;
 };
 
 /** Register app, instruction, launcher and update channels. */
@@ -33,6 +34,7 @@ export function registerAppIpc({
   togglePluginLauncher,
   safeOpenExternal,
   updater,
+  currentVersion = APP_VERSION,
 }: AppIpcDependencies): void {
   const { handle, handleWithEvent } = registrar;
 
@@ -59,7 +61,7 @@ export function registerAppIpc({
           .catch(() => undefined)
       : undefined;
     const url = buildBugReportUrl({
-      version: APP_VERSION,
+      version: currentVersion,
       platform: process.platform,
       arch: process.arch,
       protocolVersion: PROTOCOL_VERSION,
@@ -79,7 +81,7 @@ export function registerAppIpc({
       : undefined;
     return {
       name: APP_NAME,
-      version: APP_VERSION,
+      version: currentVersion,
       protocolVersion: PROTOCOL_VERSION,
       hostProtocolVersion: hostVersion?.protocolVersion,
       hostVersion: hostVersion?.version,

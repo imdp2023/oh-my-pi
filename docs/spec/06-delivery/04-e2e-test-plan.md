@@ -8,6 +8,25 @@
 
 ## 1. Goals
 
+### E2E-PERSONAL-content-update-and-rollback
+
+- **Preconditions:** macOS arm64, host Electron binary, isolated temporary
+  shell/profile/data, ephemeral test Ed25519 key; no user's instance or network.
+- **Steps:** Boot the embedded release with the production fixed bootstrap;
+  check/download a signed content fixture through the production service;
+  explicitly activate and launch another Electron process; load renderer modules
+  and resolve fixed dependencies; stage a newer candidate that exits before
+  health acknowledgement; launch again.
+- **Expected:** Download alone cannot switch versions. The compatible candidate
+  runs from its own directory and commits only when healthy. Failed startup
+  restores the previous known-good content on the next launch. The application
+  bundle and user-data sentinel remain unchanged. Rejected versions are retained
+  in failure state rather than retried indefinitely.
+- **Coverage:** `node scripts/e2e-personal-content-update.mjs`,
+  `node --test apps/desktop/test/content-shell.test.mjs`, personal controller and
+  release-script tests. GitHub-hosted build and manual first-open approval are
+  separate real-deployment checks, not simulated by this fixture.
+
 ### E2E-STORAGE-custom-location-and-maintenance
 
 - **Preconditions:** Dedicated request worktree, current remote-main base, shared

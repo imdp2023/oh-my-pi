@@ -15,6 +15,13 @@ target/
 apps/desktop/out/
 apps/desktop/dist-electron/
 apps/desktop/release/
+apps/desktop/content-shell-config.json
+content-*-darwin-arm64.json.gz
+content-manifest.json
+content-manifest.sig
+.release-before/
+.release-assets/
+release-assets/
 packages/*/dist/
 packages/*/dist-bundle/
 apps/*/dist-bundle/
