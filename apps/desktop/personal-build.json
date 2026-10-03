@@ -1,6 +1,6 @@
 {
   "appId": "io.github.imdp2023.pi-personal",
-  "productName": "PI-Desktop Personal",
+  "productName": "oh-my-pi",
   "repository": "imdp2023/oh-my-pi",
-  "shellVersion": "1.0.0"
+  "shellVersion": "1.0.1"
 }

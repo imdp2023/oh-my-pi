@@ -2,16 +2,16 @@ import { en, type EnglishCatalog } from "../en/index.js";
 
 export const es = {
   "app": {
-    "shellName": "PI-Desktop",
+    "shellName": "oh-my-pi",
     "tagline": "Socio de codificación de IA local",
-    "starting": "Iniciando PI-Desktop…",
+    "starting": "Iniciando oh-my-pi…",
     "loadingView": "Cargando vista…",
     "uiCrashed": "Algo salió mal con la interfaz"
   },
   "startup": {
     "slowTitle": "Aún iniciando…",
-    "slowBody": "PI-Desktop está tardando más de lo habitual en alcanzar tu servicio local. Puede que aún termine por sí solo — puedes esperar o recoger los registros primero.",
-    "stalledTitle": "PI-Desktop no pudo terminar de iniciarse",
+    "slowBody": "oh-my-pi está tardando más de lo habitual en alcanzar tu servicio local. Puede que aún termine por sí solo — puedes esperar o recoger los registros primero.",
+    "stalledTitle": "oh-my-pi no pudo terminar de iniciarse",
     "stalledBody": "Esta ventana nunca recibió tus chats y tu configuración, así que todavía no hay nada que mostrar. No se eliminó nada — tus datos siguen en el disco.",
     "retrying": "Reintentando…",
     "copyDiagnostics": "Copiar diagnósticos",
@@ -36,12 +36,12 @@ export const es = {
     "unread": "Sin leer",
     "pinned": "Fijadas",
     "viewMore": "Ver más…",
-    "open": "Abrir PI-Desktop",
-    "quit": "Salir de PI-Desktop",
-    "askTitle": "¿Mantener PI-Desktop ejecutándose en segundo plano?",
-    "askBody": "Cuando cierra la ventana, PI-Desktop puede seguir ejecutándose en la bandeja del sistema para que no se pierda nada. Puedes cambiar esto en cualquier momento en Configuración.",
+    "open": "Abrir oh-my-pi",
+    "quit": "Salir de oh-my-pi",
+    "askTitle": "¿Mantener oh-my-pi ejecutándose en segundo plano?",
+    "askBody": "Cuando cierra la ventana, oh-my-pi puede seguir ejecutándose en la bandeja del sistema para que no se pierda nada. Puedes cambiar esto en cualquier momento en Configuración.",
     "closeToTray": "Cerca de la bandeja",
-    "confirmQuitTitle": "¿Salir de PI-Desktop?",
+    "confirmQuitTitle": "¿Salir de oh-my-pi?",
     "confirmQuitBody": "¿Está seguro de que desea salir? Se detendrán todas las sesiones en ejecución y es posible que se pierdan los cambios no guardados.",
     "confirmQuit": "Salir"
   },
@@ -92,7 +92,7 @@ export const es = {
     "zoomOut": "Alejar",
     "toggleFullScreen": "Alternar pantalla completa",
     "toggleDevTools": "Herramientas de desarrollador",
-    "appHelp": "Ayuda de PI-Desktop",
+    "appHelp": "Ayuda de oh-my-pi",
     "openLogs": "Abrir registros",
     "checkForUpdates": "Buscar actualizaciones…"
   },
@@ -253,7 +253,7 @@ export const es = {
     "emptyTitle": "¿Qué puedo ayudarte a construir?",
     "emptyTitleInProject": "¿Qué podemos construir en {{project}}?",
     "emptyTitleTemporary": "¿Qué te gustaría explorar temporalmente?",
-    "placeholder": "Pídale ayuda a PI-Desktop con cualquier cosa",
+    "placeholder": "Pídale ayuda a oh-my-pi con cualquier cosa",
     "placeholderHome": "Pregunte cualquier cosa",
     "placeholderHint": "Escriba / para comandos · @ para archivos",
     "placeholderHomeHint": "Escriba / para comandos · @ para archivos",
@@ -659,7 +659,7 @@ export const es = {
     },
     "power": "Energía",
     "keepAwakeWhileRunning": "Mantener el equipo activo",
-    "keepAwakeWhileRunningDesc": "Evita la suspensión por inactividad mientras PI-Desktop esté abierto. La pantalla puede apagarse; la suspensión manual y al cerrar la tapa siguen funcionando.",
+    "keepAwakeWhileRunningDesc": "Evita la suspensión por inactividad mientras oh-my-pi esté abierto. La pantalla puede apagarse; la suspensión manual y al cerrar la tapa siguen funcionando.",
     "imageModel": "Modelo de imágenes",
     "imageModelUnset": "Sin configurar",
     "imageModelUnavailable": "No disponible por ahora",
@@ -757,7 +757,7 @@ sklm: {
       "Este proveedor proviene del complemento «{{plugin}}», que proporciona su punto final y sus modelos. Actívelo o desactívelo en la página «Extensiones».",
     "pluginProviderKey": "Clave API",
     "pluginProviderKeyHint":
-      "Se guarda en PI-Desktop y lo usa el entorno de ejecución. El complemento nunca lo recibe.",
+      "Se guarda en oh-my-pi y lo usa el entorno de ejecución. El complemento nunca lo recibe.",
     "pluginProviderKeyRemove": "Eliminar clave",
     "pluginProviderKeySaved": "Clave API guardada",
     "pluginProviderKeyRemoved": "Clave API eliminada",
@@ -1727,7 +1727,7 @@ sklm: {
     "noProjects": "Aún no hay proyectos"
   },
   "scheduled": {
-    "description": "Ejecuta tareas recurrentes mientras PI-Desktop está abierto.",
+    "description": "Ejecuta tareas recurrentes mientras oh-my-pi está abierto.",
     "edit": "Editar tarea",
     "hourlyHint": "Se ejecuta cada hora, desde una hora después de guardar o activar. Reiniciar la app reinicia el intervalo.",
     "morning": "Mañana",
@@ -1741,7 +1741,7 @@ sklm: {
     "legacyHint": "Edita y guarda la programación para activar las ejecuciones automáticas.",
     "time": "Hora",
     "weekday": "Día de la semana",
-    "localTimeHint": "Usa la zona horaria local. Mantén PI-Desktop abierto; las ejecuciones omitidas no se recuperan.",
+    "localTimeHint": "Usa la zona horaria local. Mantén oh-my-pi abierto; las ejecuciones omitidas no se recuperan.",
     "projectHint": "Se guarda el proyecto actual. Se utiliza el modelo predeterminado.",
     "autoPermissionHint": "El modo automático puede ejecutar acciones restringidas sin preguntar. Úsalo solo para tareas de confianza.",
     "unavailableModel": "{{provider}} / {{model}} (no disponible)",
@@ -2224,9 +2224,9 @@ sklm: {
       "agent.prompt.inject": "Puede cambiar las instrucciones enviadas al agente de IA.",
       "agent.complete": "Puede gastar su cuota de modelo en una finalización única. El complemento nunca recibe sus claves API.",
       "agent.extension": "Ejecuta módulos ExtensionAPI dentro del proceso del agente con el mismo acceso que sus propias herramientas. Activa solo código en el que confíes.",
-      "renderer.extension": "Carga el módulo de renderizado de este complemento en la ventana de la app para dibujar componentes en los slots de la interfaz (barras de acción de mensajes, extras de respuesta, tarjetas de herramientas, renderizadores de bloques de código, controles del compositor). El módulo se ejecuta en el mismo documento que PI-Desktop. Activa solo código de confianza.",
-      "provider.register": "Agregue los proveedores que define este complemento a la lista de proveedores de Configuración. El complemento aporta el punto final y los modelos; su clave API permanece en PI-Desktop.",
-      "desktop.control": "Permite invocar el catálogo de control de PI-Desktop revisado; las operaciones destructivas siguen requiriendo confirm=true y el token bearer de MCP no se expone.",
+      "renderer.extension": "Carga el módulo de renderizado de este complemento en la ventana de la app para dibujar componentes en los slots de la interfaz (barras de acción de mensajes, extras de respuesta, tarjetas de herramientas, renderizadores de bloques de código, controles del compositor). El módulo se ejecuta en el mismo documento que oh-my-pi. Activa solo código de confianza.",
+      "provider.register": "Agregue los proveedores que define este complemento a la lista de proveedores de Configuración. El complemento aporta el punto final y los modelos; su clave API permanece en oh-my-pi.",
+      "desktop.control": "Permite invocar el catálogo de control de oh-my-pi revisado; las operaciones destructivas siguen requiriendo confirm=true y el token bearer de MCP no se expone.",
       "models.list": "Puede ver en qué modelos se ha registrado. No recibe llaves.",
       "session.read": "Puede leer la conversación en la que está operando la llamada de herramienta actual, incluidos los resultados de la herramienta.",
       "net.fetch": "Puede realizar solicitudes de red salientes.",
@@ -2239,7 +2239,7 @@ sklm: {
       "audio.capture.background": "Captura el micrófono mientras el complemento se ejecuta en segundo plano, sin ningún panel abierto.",
       "audio.playback.background": "Reproduce el audio que transmite el complemento, incluso cuando no hay ningún panel abierto.",
       "speech.adapter.register": "Puede añadir un protocolo de transcripción o voz que use tus claves de proveedor. El complemento nunca ve la clave.",
-      "keyboard.globalShortcut": "Registra atajos de teclado del sistema que activan los comandos propios de este complemento mientras PI-Desktop no tiene el foco.",
+      "keyboard.globalShortcut": "Registra atajos de teclado del sistema que activan los comandos propios de este complemento mientras oh-my-pi no tiene el foco.",
       "net.websocket": "Abre conexiones bidireccionales en tiempo real con los hosts que declara el complemento.",
       "net.anyHost": "Puede contactar cualquier servidor por HTTP(S) o WebSocket(S), incluidas direcciones autoalojadas introducidas por el usuario. Los endpoints de metadatos de la nube siguen bloqueados.",
       "bus.publish": "Puede enviar mensajes sobre los temas que declaró.",
@@ -2466,7 +2466,7 @@ sklm: {
     "unsupportedGlibc":
       "Esta versión para Linux requiere glibc 2.35 o posterior (Ubuntu 22.04, Debian 12, Fedora 36+).",
     "dbSchemaTooNew":
-      "Esta versión de PI-Desktop es más antigua que tus datos locales (esquema de datos {{found}}, esta versión admite {{supported}}). Instala la versión más reciente de PI-Desktop que abrió estos datos por última vez, o una posterior.",
+      "Esta versión de oh-my-pi es más antigua que tus datos locales (esquema de datos {{found}}, esta versión admite {{supported}}). Instala la versión más reciente de oh-my-pi que abrió estos datos por última vez, o una posterior.",
     "archMismatch":
       "Esta es la versión {{buildArch}} ejecutándose en una máquina {{machineArch}}, por lo que corre mediante traducción y es más lenta. Instala la versión {{machineArch}}.",
     "dismissArchMismatch": "Descartar",

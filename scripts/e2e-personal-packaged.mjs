@@ -2,13 +2,20 @@
 // Validate the built personal application itself with an isolated profile and
 // the existing real host/preload/renderer BOOT_PROBE. Never launch /Applications.
 import { spawn } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-const bundle = resolve(process.argv[2] ?? "apps/desktop/release/mac-arm64/PI-Desktop Personal.app");
-const binary = join(bundle, "Contents/MacOS/PI-Desktop Personal");
+const bundle = resolve(process.argv[2] ?? "apps/desktop/release/mac-arm64/oh-my-pi.app");
+const binary = join(bundle, "Contents/MacOS/oh-my-pi");
 if (!existsSync(binary)) throw new Error(`Personal packaged executable is missing: ${binary}`);
+const plist = join(bundle, "Contents/Info.plist");
+for (const key of ["CFBundleDisplayName", "CFBundleName", "CFBundleExecutable"]) {
+  if (execFileSync("plutil", ["-extract", key, "raw", plist], { encoding: "utf8" }).trim() !== "oh-my-pi") {
+    throw new Error(`Packaged application name mismatch: ${key}`);
+  }
+}
 const root = realpathSync(mkdtempSync(join(tmpdir(), "pi-desktop-boot-")));
 const env = { ...process.env,
   PI_DESKTOP_DATA_DIR: root,
@@ -29,7 +36,7 @@ try {
   const code = await new Promise((resolve, reject) => { child.once("error", reject); child.once("close", resolve); });
   const line = output.split("\n").find(line => line.startsWith("BOOT_PROBE "));
   const result = line ? JSON.parse(line.slice("BOOT_PROBE ".length)) : null;
-  if (timedOut || code !== 0 || !result?.ok || !output.includes("PERSONAL_CONTENT_HEALTHY ")) {
+  if (timedOut || code !== 0 || !result?.ok || result.appName !== "oh-my-pi" || !output.includes("PERSONAL_CONTENT_HEALTHY ")) {
     throw new Error(`Personal package smoke failed (exit ${code}, timeout ${timedOut}):\n${output.slice(-5000)}`);
   }
   console.log("PASS: packaged personal shell launches its real native host, sandboxed preload and renderer with an isolated profile");

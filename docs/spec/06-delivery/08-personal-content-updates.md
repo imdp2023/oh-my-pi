@@ -2,6 +2,13 @@
 
 Scope: public `imdp2023/oh-my-pi`, macOS arm64, personal distribution only.
 
+The display name is `oh-my-pi` as of release 0.16.1 / shell 1.0.1. Native
+bundle/executable and DMG/ZIP names follow that display name. Installation IDs,
+update keys, the personal profile `PI-Desktop Personal` and data root
+`~/.pi-desktop-personal` do not change with branding. Legacy installed/development
+profiles likewise retain their existing storage names. A rename of the native
+bundle requires a shell install rather than content-only activation.
+
 ## Release identity
 
 `release-version.json` is the human-edited release input. Its `version` is a

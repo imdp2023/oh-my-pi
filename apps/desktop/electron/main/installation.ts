@@ -1,6 +1,6 @@
 import { app } from "electron";
 import { APP_ID, APP_NAME } from "@pi-desktop/shared";
-import { applyDevelopmentUserData, desktopDataDir } from "./data-paths";
+import { applyInstallationUserData, desktopDataDir } from "./data-paths";
 import { getContentShellBridge } from "./updater-factory";
 import { ignoreBrokenStdio } from "./logger";
 import { installMainProcessErrorHandlers } from "./main-process-errors";
@@ -10,10 +10,11 @@ ignoreBrokenStdio();
 installMainProcessErrorHandlers();
 export const isDevelopmentBuild = process.env.PI_DESKTOP_DEV === "1" || !app.isPackaged;
 app.setName(APP_NAME);
-applyDevelopmentUserData(app, isDevelopmentBuild);
+const contentShell = getContentShellBridge();
+// The personal shell has already selected its stable profile directory.
+if (!contentShell) applyInstallationUserData(app, isDevelopmentBuild);
 if (process.platform === "win32") app.setAppUserModelId(APP_ID);
 
-const contentShell = getContentShellBridge();
 // The fixed launcher owns the lock; managed storage restarts keep its selected
 // personal data root instead of reverting to the standard profile.
 if (!contentShell && process.argv.includes("--pi-managed-storage")) {

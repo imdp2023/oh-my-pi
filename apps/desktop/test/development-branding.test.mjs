@@ -226,7 +226,7 @@ test(
         ),
         "macOS-tray-icon",
       );
-      assert.match(plist, /<string>PI-Desktop<\/string>/);
+      assert.match(plist, /<string>oh-my-pi<\/string>/);
       assert.match(plist, /<string>net\.aiuo\.pi-desktop\.dev<\/string>/);
       assert.equal(prepareMacDevelopmentBundle(options), brandedExecutable);
 

@@ -1,8 +1,10 @@
 <div align="center">
 
-<img src="docs/image/readme/logo.png" alt="PI-Desktop" width="108" />
+<img src="docs/image/readme/logo.png" alt="oh-my-pi" width="108" />
 
-# PI-Desktop
+# oh-my-pi
+
+> 基于 [PI-Desktop](https://github.com/vastsa/PI-Desktop) 二次开发的 Mac arm64 自用版。[下载 oh-my-pi](https://github.com/imdp2023/oh-my-pi/releases/latest) · [发布说明](docs/personal-release.md)。下方上游项目介绍还包含其他平台的能力。
 
 ### 可拆卸的 AI Agent 桌面工作台
 
@@ -12,17 +14,17 @@
 
 <br />
 
-[![Release](https://img.shields.io/github/v/release/vastsa/PI-Desktop?label=release)](https://github.com/vastsa/PI-Desktop/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/vastsa/PI-Desktop/total?label=downloads)](https://github.com/vastsa/PI-Desktop/releases)
-[![Stars](https://img.shields.io/github/stars/vastsa/PI-Desktop?style=flat\&label=stars)](https://github.com/vastsa/PI-Desktop/stargazers)
-[![CI](https://github.com/vastsa/PI-Desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/vastsa/PI-Desktop/actions/workflows/ci.yml)
-[![License](https://img.shields.io/github/license/vastsa/PI-Desktop)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/imdp2023/oh-my-pi?label=release)](https://github.com/imdp2023/oh-my-pi/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/imdp2023/oh-my-pi/total?label=downloads)](https://github.com/imdp2023/oh-my-pi/releases)
+[![Stars](https://img.shields.io/github/stars/imdp2023/oh-my-pi?style=flat\&label=stars)](https://github.com/imdp2023/oh-my-pi/stargazers)
+[![CI](https://github.com/imdp2023/oh-my-pi/actions/workflows/personal-mac-release.yml/badge.svg)](https://github.com/imdp2023/oh-my-pi/actions/workflows/personal-mac-release.yml)
+[![License](https://img.shields.io/github/license/imdp2023/oh-my-pi)](LICENSE)
 [![Reddit](https://img.shields.io/badge/Reddit-r%2FAIUO-FF4500?logo=reddit\&logoColor=white)](https://www.reddit.com/r/AIUO/)
 [![QQ 群：点击加入 PI-Desktop 开发者交流群](https://img.shields.io/badge/QQ-%E5%8A%A0%E5%85%A5%E5%BC%80%E5%8F%91%E8%80%85%E4%BA%A4%E6%B5%81%E7%BE%A4-12B7F5?logo=tencentqq&logoColor=white)](https://qm.qq.com/q/iWP8i0XxIc)
 
 <br />
 
-**[立即下载](https://github.com/vastsa/PI-Desktop/releases/latest)** ·
+**[立即下载](https://github.com/imdp2023/oh-my-pi/releases/latest)** ·
 [使用文档](https://pi-docs.aiuo.net/) ·
 [插件开发](docs/plugin-development.md) ·
 [界面预览](docs/guide/screenshots.md) ·

@@ -1,5 +1,15 @@
 # Personal macOS content updates
 
+## 0.16.1
+
+- Renamed the application and Mac installers to `oh-my-pi`; updated native,
+  renderer and localized display names together.
+- Preserved app identifiers, profile directories, user data and the content
+  verification key. The rename requires shell 1.0.1 rather than an in-place
+  content update of the old bundle name.
+
+## 0.16.0
+
 - Added a separate macOS arm64 personal distribution for `imdp2023/oh-my-pi`.
 - A release-version change on `main` can trigger GitHub Actions to test, package
   and publish a complete release with a full first-install shell and a smaller

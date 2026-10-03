@@ -15,7 +15,7 @@ try {
   const config = validateConfig(JSON.parse(readRegular(join(shellRoot, "content-shell-config.json"), 16384)));
   if (process.platform !== "darwin" || process.arch !== "arm64") throw new Error("This personal shell requires macOS arm64");
   const defaultProfile = process.argv.includes("--pi-managed-storage") || !process.env.PI_DESKTOP_DATA_DIR;
-  app.setName("PI-Desktop Personal");
+  app.setName("oh-my-pi");
   if (!app.commandLine.hasSwitch("user-data-dir")) app.setPath("userData", join(app.getPath("appData"), "PI-Desktop Personal"));
   if (!app.requestSingleInstanceLock()) {
     app.quit();

@@ -44,7 +44,7 @@ try {
   assert.equal((await import("node:crypto")).verify(null, result.manifestBytes, keys.publicKey, Buffer.from(result.signature, "base64")), true);
   const payload = JSON.parse((await gunzipAsync(result.compressed)).toString());
   assert.deepEqual(payload.files.map(({ path }) => path), ["agent-runtime/chunks/jiti.js", "agent-runtime/sidecar.js", "out/main/index.js", "out/preload/index.cjs", "out/renderer/index.html"]);
-  const assets = ["PI-Desktop-Personal-1.2.3-arm64.dmg", "PI-Desktop-Personal-1.2.3-arm64-mac.zip", result.artifact, "content-manifest.json", "content-manifest.sig"];
+  const assets = ["oh-my-pi-1.2.3-arm64.dmg", "oh-my-pi-1.2.3-arm64-mac.zip", result.artifact, "content-manifest.json", "content-manifest.sig"];
   verifyAssetNames("1.2.3", assets);
   assert.throws(() => verifyAssetNames("1.2.3", assets.slice(1)), /asset set/);
   assert.throws(() => verifyAssetNames("1.2.3", [...assets, "private-key.pem"]), /asset set/);

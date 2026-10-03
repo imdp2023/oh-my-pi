@@ -10,6 +10,13 @@
 
 ### E2E-PERSONAL-content-update-and-rollback
 
+- **Branding upgrade (0.16.1):** `personal-branding.test.mjs` checks display
+  name consistency and stable installation/profile identity; development profile
+  tests verify the same storage locations before/after a rename. The packaged
+  smoke checks `CFBundleName`, `CFBundleDisplayName`, `CFBundleExecutable` and the
+  actual running app name are all `oh-my-pi`, while retaining the existing
+  personal data/profile anchors and publisher key.
+
 - **Preconditions:** macOS arm64, host Electron binary, isolated temporary
   shell/profile/data, ephemeral test Ed25519 key; no user's instance or network.
 - **Steps:** Boot the embedded release with the production fixed bootstrap;

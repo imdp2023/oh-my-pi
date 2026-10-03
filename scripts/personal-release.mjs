@@ -54,7 +54,7 @@ export function validateSigningKeyPair(publicKeyBase64, privateKeyBase64) {
 
 export function verifyAssetNames(version, names) {
   assertVersion(version);
-  const expected = [`PI-Desktop-Personal-${version}-arm64.dmg`, `PI-Desktop-Personal-${version}-arm64-mac.zip`, `content-${version}-darwin-arm64.json.gz`, "content-manifest.json", "content-manifest.sig"].sort();
+  const expected = [`oh-my-pi-${version}-arm64.dmg`, `oh-my-pi-${version}-arm64-mac.zip`, `content-${version}-darwin-arm64.json.gz`, "content-manifest.json", "content-manifest.sig"].sort();
   const actual = [...names].sort();
   if (actual.length !== expected.length || actual.some((name, index) => name !== expected[index])) throw new Error("Release asset set is incomplete or contains unexpected files");
 }
@@ -208,7 +208,7 @@ async function main() {
       config.version = release.version;
       if (path === "apps/desktop/package.json") {
         config.homepage = "https://github.com/imdp2023/oh-my-pi";
-        config.build = { ...config.build, appId: build.appId, productName: build.productName, publish: [], asar: false, extraMetadata: { ...config.build.extraMetadata, main: "content-shell/launcher.cjs" }, files: [...new Set([...(config.build.files ?? []), "content-shell/**/*", "content-shell-config.json"])], extraResources: [...(config.build.extraResources ?? []), { from: "resources/models.dev", to: "models.dev" }], mac: { ...config.build.mac, identity: "-", notarize: false, artifactName: "PI-Desktop-Personal-${version}-${arch}-mac.${ext}" }, dmg: { ...config.build.dmg, artifactName: "PI-Desktop-Personal-${version}-${arch}.${ext}" } };
+        config.build = { ...config.build, appId: build.appId, productName: build.productName, publish: [], asar: false, extraMetadata: { ...config.build.extraMetadata, main: "content-shell/launcher.cjs" }, files: [...new Set([...(config.build.files ?? []), "content-shell/**/*", "content-shell-config.json"])], extraResources: [...(config.build.extraResources ?? []), { from: "resources/models.dev", to: "models.dev" }], mac: { ...config.build.mac, identity: "-", notarize: false, artifactName: "oh-my-pi-${version}-${arch}-mac.${ext}" }, dmg: { ...config.build.dmg, artifactName: "oh-my-pi-${version}-${arch}.${ext}" } };
       }
       await writeFile(file, `${JSON.stringify(config, null, 2)}\n`);
     }

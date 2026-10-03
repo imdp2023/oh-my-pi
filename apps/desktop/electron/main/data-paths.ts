@@ -1,6 +1,5 @@
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
-import { APP_NAME } from "@pi-desktop/shared";
 
 /**
  * The two directories that define an installation, and the development split
@@ -23,7 +22,9 @@ import { APP_NAME } from "@pi-desktop/shared";
  */
 
 /** `userData` directory of a development installation, beside the shipped one. */
-export const DEVELOPMENT_INSTALLATION_NAME = `${APP_NAME} Dev`;
+// Storage identities deliberately survive display-name changes.
+export const DEVELOPMENT_INSTALLATION_NAME = "PI-Desktop Dev";
+export const LEGACY_INSTALLATION_NAME = "PI-Desktop";
 
 /** Data directory of a shipped installation, below the user's home. */
 export const INSTALLATION_DATA_DIR_NAME = ".pi-desktop";
@@ -96,19 +97,20 @@ export type UserDataApp = {
 };
 
 /**
- * Give a development build its own `userData` so the single-instance lock
- * does not collide with a shipped app that is already running (D236, ADR 0094).
+ * Pin both legacy installation profiles independently of the display name.
+ * Development remains separate from installed builds (D236, ADR 0094).
+ * The personal content shell owns its profile and does not call this helper.
  * An explicit `--user-data-dir` wins, because that is how the E2E harnesses
  * point a build at a throwaway profile.
  */
-export function applyDevelopmentUserData(
+export function applyInstallationUserData(
   app: UserDataApp,
   development: boolean,
 ): void {
-  if (development && !app.commandLine.hasSwitch("user-data-dir")) {
+  if (!app.commandLine.hasSwitch("user-data-dir")) {
     app.setPath(
       "userData",
-      join(app.getPath("appData"), DEVELOPMENT_INSTALLATION_NAME),
+      join(app.getPath("appData"), development ? DEVELOPMENT_INSTALLATION_NAME : LEGACY_INSTALLATION_NAME),
     );
   }
 }

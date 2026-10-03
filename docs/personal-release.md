@@ -1,5 +1,18 @@
 # Personal macOS Release Lane
 
+## Application name and upgrade from 0.16.0
+
+Version 0.16.1 is named **oh-my-pi**, including `oh-my-pi.app`, the macOS
+application menu, window/About labels and installer filenames. This is shell
+version 1.0.1: install the new shell once; changing only downloaded JavaScript
+cannot rename an installed application bundle.
+
+The app identifier remains `io.github.imdp2023.pi-personal`. The existing
+`PI-Desktop Personal` Chromium/profile directory and `~/.pi-desktop-personal`
+data directory are intentionally retained. Quit the old personal application
+before opening the renamed one. No data is moved, deleted or silently imported
+from the upstream app. Future compatible content updates still use this profile.
+
 The `personal-mac-release` workflow builds only public `imdp2023/oh-my-pi`
 macOS arm64 self-use releases. It uses an ad hoc signature (`identity: "-"`)
 and does not notarize or modify the official production build configuration.

@@ -11,6 +11,7 @@ Run: python3 scripts/make-dmg-background.py
 from __future__ import annotations
 
 import math
+import json
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -135,7 +136,7 @@ def _wordmark(base: Image.Image) -> None:
     zh_font = _font("/System/Library/Fonts/Hiragino Sans GB.ttc", 12, index=0)
 
     draw = ImageDraw.Draw(base)
-    title = "PI-Desktop"
+    title = json.loads((ROOT / "apps/desktop/package.json").read_text())["build"]["productName"]
     x0, y0, x1, y1 = draw.textbbox((0, 0), title, font=title_font)
     gap = _px(10)
     cluster_w = mark_size + gap + (x1 - x0)

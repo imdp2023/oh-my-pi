@@ -1,4 +1,4 @@
-name: Personal macOS Release
+name: oh-my-pi macOS Release
 
 on:
   push:
@@ -87,7 +87,7 @@ jobs:
           pnpm --filter @pi-desktop/desktop run build:deps
           pnpm --filter @pi-desktop/desktop typecheck
           node scripts/test-personal-release.mjs
-          node --test apps/desktop/test/content-shell.test.mjs apps/desktop/test/content-update-controller.test.mjs
+          node --test apps/desktop/test/content-shell.test.mjs apps/desktop/test/content-update-controller.test.mjs apps/desktop/test/personal-branding.test.mjs apps/desktop/test/development-profile.test.mjs
           node scripts/check-style-tokens.mjs
       - name: Build native host and desktop
         run: |
@@ -105,8 +105,8 @@ jobs:
         run: |
           node scripts/personal-release.mjs payload
           mkdir -p release-assets
-          cp apps/desktop/release/PI-Desktop-Personal-*.dmg release-assets/
-          cp apps/desktop/release/PI-Desktop-Personal-*-arm64-mac.zip release-assets/
+          cp apps/desktop/release/oh-my-pi-*.dmg release-assets/
+          cp apps/desktop/release/oh-my-pi-*-arm64-mac.zip release-assets/
           cp content-*.json.gz content-manifest.json content-manifest.sig release-assets/
       - uses: actions/upload-artifact@v4
         with:
@@ -150,7 +150,7 @@ jobs:
           if gh release view "$TAG" --json isDraft --jq '.isDraft' > .release-exists 2>/dev/null; then
             grep -qx true .release-exists || { echo "Published versions cannot be overwritten" >&2; exit 1; }
           else
-            gh release create "$TAG" --draft --target "$TARGET" --title "PI-Desktop Personal $VERSION" --notes "Mac arm64 personal build. Install the app once; compatible updates use signed content packages and an explicit restart. Ad hoc signed, not notarized."
+            gh release create "$TAG" --draft --target "$TARGET" --title "oh-my-pi $VERSION" --notes "Mac arm64 personal build. Install the app once; compatible updates use signed content packages and an explicit restart. Ad hoc signed, not notarized."
           fi
           gh release upload "$TAG" release-assets/* --clobber
           names=$(gh release view "$TAG" --json assets --jq '.assets[].name')

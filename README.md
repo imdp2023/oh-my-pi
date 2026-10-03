@@ -1,8 +1,10 @@
 <div align="center">
 
-<img src="docs/image/readme/logo.png" alt="PI-Desktop" width="108" />
+<img src="docs/image/readme/logo.png" alt="oh-my-pi" width="108" />
 
-# PI-Desktop
+# oh-my-pi
+
+> Personal macOS arm64 fork of [PI-Desktop](https://github.com/vastsa/PI-Desktop). [Download oh-my-pi](https://github.com/imdp2023/oh-my-pi/releases/latest) · [Release guide](docs/personal-release.md). The upstream overview below also describes other platforms.
 
 ### A modular desktop workspace for AI agents
 
@@ -12,16 +14,16 @@ Local-first · Model-agnostic · Plugin-powered · macOS / Windows / Linux
 
 <br />
 
-[![Release](https://img.shields.io/github/v/release/vastsa/PI-Desktop?label=release)](https://github.com/vastsa/PI-Desktop/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/vastsa/PI-Desktop/total?label=downloads)](https://github.com/vastsa/PI-Desktop/releases)
-[![Stars](https://img.shields.io/github/stars/vastsa/PI-Desktop?style=flat\&label=stars)](https://github.com/vastsa/PI-Desktop/stargazers)
-[![CI](https://github.com/vastsa/PI-Desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/vastsa/PI-Desktop/actions/workflows/ci.yml)
-[![License](https://img.shields.io/github/license/vastsa/PI-Desktop)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/imdp2023/oh-my-pi?label=release)](https://github.com/imdp2023/oh-my-pi/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/imdp2023/oh-my-pi/total?label=downloads)](https://github.com/imdp2023/oh-my-pi/releases)
+[![Stars](https://img.shields.io/github/stars/imdp2023/oh-my-pi?style=flat\&label=stars)](https://github.com/imdp2023/oh-my-pi/stargazers)
+[![CI](https://github.com/imdp2023/oh-my-pi/actions/workflows/personal-mac-release.yml/badge.svg)](https://github.com/imdp2023/oh-my-pi/actions/workflows/personal-mac-release.yml)
+[![License](https://img.shields.io/github/license/imdp2023/oh-my-pi)](LICENSE)
 [![Reddit](https://img.shields.io/badge/Reddit-r%2FAIUO-FF4500?logo=reddit\&logoColor=white)](https://www.reddit.com/r/AIUO/)
 
 <br />
 
-**[Download](https://github.com/vastsa/PI-Desktop/releases/latest)** ·
+**[Download](https://github.com/imdp2023/oh-my-pi/releases/latest)** ·
 [Documentation](https://pi-docs.aiuo.net/) ·
 [Build a Plugin](docs/plugin-development.md) ·
 [Screenshots](docs/guide/screenshots.md) ·

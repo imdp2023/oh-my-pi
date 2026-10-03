@@ -10,7 +10,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 register(pathToFileURL(join(here, "helpers/ts-import-hooks.mjs")));
 const {
-  applyDevelopmentUserData,
+  applyInstallationUserData,
   DEVELOPMENT_DATA_DIR_NAME,
   DEVELOPMENT_INSTALLATION_NAME,
   INSTALLATION_DATA_DIR_NAME,
@@ -74,21 +74,22 @@ test("an explicit data directory reaches the child processes as an absolute path
   );
 });
 
-test("applyDevelopmentUserData sets userData unless --user-data-dir is set", () => {
+test("applyInstallationUserData sets userData unless --user-data-dir is set", () => {
   const calls = [];
   const app = {
     commandLine: { hasSwitch: () => false },
     getPath: () => "/tmp/appData",
     setPath: (name, path) => calls.push([name, path]),
   };
-  applyDevelopmentUserData(app, true);
+  applyInstallationUserData(app, true);
   assert.deepEqual(calls, [
     ["userData", join("/tmp/appData", DEVELOPMENT_INSTALLATION_NAME)],
   ]);
   calls.length = 0;
-  applyDevelopmentUserData(app, false);
-  assert.equal(calls.length, 0);
-  applyDevelopmentUserData(
+  applyInstallationUserData(app, false);
+  assert.deepEqual(calls, [["userData", join("/tmp/appData", "PI-Desktop")]]);
+  calls.length = 0;
+  applyInstallationUserData(
     { ...app, commandLine: { hasSwitch: (name) => name === "user-data-dir" } },
     true,
   );
@@ -100,7 +101,7 @@ test("a development build takes its own userData before the single-instance lock
   // Electron asks for it; otherwise a running packaged app refuses the lock and
   // `pnpm dev` quits on arrival.
   const pathsSource = await readMainModule("data-paths.ts");
-  const apply = installationSource.indexOf("applyDevelopmentUserData(app, isDevelopmentBuild)");
+  const apply = installationSource.indexOf("applyInstallationUserData(app, isDevelopmentBuild)");
   const setName = installationSource.indexOf("app.setName(APP_NAME)");
   const lock = installationSource.indexOf("app.requestSingleInstanceLock()");
 
@@ -114,11 +115,11 @@ test("a development build takes its own userData before the single-instance lock
   // assertions against the developer's own state instead.
   assert.match(
     pathsSource,
-    /if \(development && !app\.commandLine\.hasSwitch\("user-data-dir"\)\) \{/,
+    /if \(!app\.commandLine\.hasSwitch\("user-data-dir"\)\) \{/,
   );
   assert.match(
     pathsSource,
-    /app\.setPath\(\s*"userData",\s*join\(app\.getPath\("appData"\), DEVELOPMENT_INSTALLATION_NAME\)/,
+    /app\.setPath\(\s*"userData",\s*join\(app\.getPath\("appData"\), development \? DEVELOPMENT_INSTALLATION_NAME : LEGACY_INSTALLATION_NAME\)/,
   );
 
   // The two profiles are told apart by the same verdict everywhere, and it is
@@ -143,9 +144,10 @@ test("main resolves one data directory and publishes it to everything below", ()
   // moving the write above `singleInstanceRequired` would make every launch
   // look like it had been given an explicit data directory and skip the lock.
   const lockVerdict = installationSource.indexOf(
-    "const singleInstanceRequired = !process.env.PI_DESKTOP_DATA_DIR;",
+    "const singleInstanceRequired = contentShell",
   );
   assert.ok(lockVerdict > 0);
+  assert.match(installationSource, /singleInstanceRequired = contentShell\s*\? contentShell.defaultProfile\s*: !process.env.PI_DESKTOP_DATA_DIR/);
   assert.doesNotMatch(installationSource, /process\.env\.PI_DESKTOP_DATA_DIR = dataDir;/);
   assert.match(entrySource, /from ["']\.\/installation["']/);
   assert.match(entrySource, /\.then\([\s\S]*?import\(["']\.\/index["']\)/);
