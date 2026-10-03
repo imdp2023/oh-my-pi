@@ -9,9 +9,9 @@ import { join, resolve } from "node:path";
 const bundle = resolve(process.argv[2] ?? "apps/desktop/release/mac-arm64/PI-Desktop Personal.app");
 const binary = join(bundle, "Contents/MacOS/PI-Desktop Personal");
 if (!existsSync(binary)) throw new Error(`Personal packaged executable is missing: ${binary}`);
-const root = realpathSync(mkdtempSync(join(tmpdir(), "pi-personal-packaged-")));
+const root = realpathSync(mkdtempSync(join(tmpdir(), "pi-desktop-boot-")));
 const env = { ...process.env,
-  PI_DESKTOP_DATA_DIR: join(root, "data"),
+  PI_DESKTOP_DATA_DIR: root,
   PI_DESKTOP_BOOT_PROBE: "1",
   PI_DESKTOP_START_MAXIMIZED: "0",
   ELECTRON_RENDERER_URL: "",
@@ -26,7 +26,7 @@ child.stdout.on("data", chunk => { output += chunk; });
 child.stderr.on("data", chunk => { output += chunk; });
 const timer = setTimeout(() => { timedOut = true; child.kill("SIGKILL"); }, 90000);
 try {
-  const code = await new Promise((resolve, reject) => { child.once("error", reject); child.once("exit", resolve); });
+  const code = await new Promise((resolve, reject) => { child.once("error", reject); child.once("close", resolve); });
   const line = output.split("\n").find(line => line.startsWith("BOOT_PROBE "));
   const result = line ? JSON.parse(line.slice("BOOT_PROBE ".length)) : null;
   if (timedOut || code !== 0 || !result?.ok || !output.includes("PERSONAL_CONTENT_HEALTHY ")) {

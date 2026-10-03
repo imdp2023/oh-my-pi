@@ -123,7 +123,9 @@ export async function computeCompatibility({ baseDir = root } = {}) {
     await addFile(`packages/${entry.name}/package.json`, normalizePackageManifest);
   }
   for (const path of ["apps/desktop/resources/skills", "apps/desktop/resources/plugins", "apps/desktop/resources/models.dev", "apps/desktop/build"]) await addTree(path);
-  await addTree("scripts");
+  // Test/docs changes are not a native ABI change. Only the packaging rules
+  // that define the fixed shell join its dependency/source fingerprint.
+  for (const path of ["scripts/personal-release.mjs", "scripts/build-desktop-release.mjs"]) await addFile(path);
 
   const hash = createHash("sha256");
   for (const [path, contents] of [...files].sort(([a], [b]) => a.localeCompare(b))) {

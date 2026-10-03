@@ -64,6 +64,8 @@ try {
     await writeFile(file, (await readFile(file, "utf8")).replaceAll("1.2.3", "1.2.4"));
   }
   await writeFile(join(directory, "apps/desktop/out/main/index.js"), "new compatible JS");
+  await mkdir(join(directory, "scripts"));
+  await writeFile(join(directory, "scripts/e2e-example.mjs"), "// new UI regression test");
   assert.equal(await computeCompatibility({ baseDir: directory }), baseline, "version/JS changes must remain content-compatible");
   await writeFile(join(directory, "crates/host-core/src/lib.rs"), "// changed database/native contract");
   assert.notEqual(await computeCompatibility({ baseDir: directory }), baseline, "native changes require a shell upgrade");

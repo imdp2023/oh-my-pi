@@ -65,7 +65,7 @@ async function boot(expected, fail = false) {
   child.stderr.on("data", chunk => { output += chunk; });
   const timer = setTimeout(() => child.kill("SIGKILL"), 25000);
   try {
-    const code = await new Promise((resolve, reject) => { child.once("error", reject); child.once("exit", resolve); });
+    const code = await new Promise((resolve, reject) => { child.once("error", reject); child.once("close", resolve); });
     assert.equal(code, fail ? 3 : 0, output.slice(-5000));
     const line = output.split("\n").find(line => line.startsWith("CONTENT_PROBE "));
     assert.ok(line, output.slice(-5000));
